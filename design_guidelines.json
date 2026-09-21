@@ -1,0 +1,242 @@
+{
+  "brand_identity": {
+    "agency_name": "Lunar Design",
+    "tagline": "Architects of High-End Digital Presence",
+    "positioning": "Awwwards-level web design, brand systems, domains, hosting & digital infrastructure agency with a dark, cinematic aesthetic.",
+    "emotional_archetype": "LUXURY & RETRO-FUTURIST EDITORIAL (Cinematic Dark, Gold Spark, Crimson Accent)",
+    "logo_signature": "Black rounded-square container, white serif wordmark, crimson red rounded-square icon containing a white circle, gold/yellow accent underline."
+  },
+  "color_system": {
+    "theme_mode": "Dark Cinematic (Fixed Dark Base with High-Contrast Accents)",
+    "palette": {
+      "background_primary": "#08080B",
+      "background_secondary": "#0E0E14",
+      "surface_card": "#13131A",
+      "surface_hover": "#1A1A24",
+      "border_subtle": "rgba(255, 255, 255, 0.08)",
+      "border_accent_red": "rgba(200, 50, 43, 0.4)",
+      "border_accent_gold": "rgba(212, 175, 55, 0.4)",
+      "text_primary": "#F4F1EA",
+      "text_secondary": "#A39E93",
+      "text_muted": "#68645D",
+      "accent_red": "#C8322B",
+      "accent_red_glow": "rgba(200, 50, 43, 0.25)",
+      "accent_gold": "#D4AF37",
+      "accent_gold_glow": "rgba(212, 175, 55, 0.2)",
+      "badge_bg": "#16161F"
+    },
+    "rules": [
+      "NEVER use pure black #000000; always tint with subtle deep violet/indigo tone (#08080B).",
+      "Red accent (#C8322B) is reserved for primary focal points, live status indicators, badge highlights, and interactive triggers.",
+      "Gold accent (#D4AF37) is reserved for underlines, key metric values, manifesto chapter numbers, and award tags.",
+      "Text contrast must strictly maintain WCAG AA standard against dark surfaces."
+    ]
+  },
+  "typography": {
+    "heading_font": "Playfair Display, Cormorant Garamond, or serif display (loaded via Google Fonts @import in index.css)",
+    "body_font": "Plus Jakarta Sans, Outfit, or Inter (sans-serif body text)",
+    "mono_font": "JetBrains Mono, Fira Code (for service specs & manifesto counters)",
+    "scale_hierarchy": {
+      "h1_hero": "text-4xl sm:text-6xl lg:text-7xl font-serif tracking-tight leading-[1.05]",
+      "h2_section": "text-3xl sm:text-4xl lg:text-5xl font-serif tracking-tight leading-tight",
+      "h3_subsection": "text-xl sm:text-2xl font-serif text-amber-50/90",
+      "manifesto_num": "font-mono text-sm tracking-widest text-amber-400/90 uppercase",
+      "body_lead": "text-lg sm:text-xl text-[#A39E93] font-light leading-relaxed",
+      "body_standard": "text-base text-[#A39E93] leading-relaxed",
+      "label_overline": "text-xs font-mono uppercase tracking-[0.25em] text-[#C8322B]"
+    }
+  },
+  "layout_and_spacing": {
+    "strategy": "The Swiss Grid with Bento Modernity & Asymmetric Tension",
+    "grid_modes": {
+      "hero_layout": "Asymmetric 12-column split with full kinetic typography reveal, interactive canvas sphere on right, and live status pill.",
+      "manifesto_grid": "3-column staggered editorial grid with giant numbered gold counters (01, 02, 03...), vertical borders, and rich description blocks.",
+      "portfolio_bento": "Tetris Grid layout combining widescreen 8-col hero project cards with 4-col tall showcases and hover video/image zoom previews.",
+      "services_grid": "4-column high-density bento grid featuring website deployment, logo identity, banner art, custom domains, and managed hosting."
+    },
+    "padding_rules": "Generous spacing philosophy: py-20 to py-32 for major page sections. Card containers must have internal padding p-6 to p-8 to avoid edge collision."
+  },
+  "signature_features": {
+    "on_load_text_reveal": "Masked line-by-line reveal animation using Framer Motion with cubic-bezier ease out.",
+    "3d_lunar_hero": "Interactive WebGL canvas / Three.js glowing lunar sphere with floating gold & red particles, responding to mouse position.",
+    "slow_editorial_marquee": "Continuous low-speed drifting ticker featuring services, award honors, and partner logos with subtle thin top/bottom borders.",
+    "numbered_manifesto": "Editorial section with chapters 01, 02, 03 detailing Lunar Design's philosophy (Precision, Immersion, Infrastructure).",
+    "interactive_enquiry_system": "Multi-step or rich single-page enquiry form with interactive service chip selectors, budget slider, and submission modal/toast with persistent state.",
+    "portfolio_case_modal": "Full overlay modal showing case study metrics, live demo link, technical tech stack tags, and client quotes.",
+    "social_integration": "Direct Instagram feed/link button with custom kinetic magnetic hover effect."
+  },
+  "image_urls": {
+    "lunar_3d_hero": [
+      {
+        "url": "https://images.unsplash.com/photo-1719365233254-3133a142c34f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NjV8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGRhcmslMjAzZCUyMHNwaGVyZSUyMGx1bmFyJTIwZ29sZCUyMHJlZCUyMG1pbmltYWwlˆZW9tZXRyaWN8ZW58MHx8fHwxNzkwMDI2NjAwfDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Lunar Sphere Abstract 3D Render",
+        "usage": "Hero background / 3D visual showcase"
+      },
+      {
+        "url": "https://images.pexels.com/photos/30869729/pexels-photo-30869729.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Gold and Metallic Spherical Structure",
+        "usage": "About Section Accent Art"
+      }
+    ],
+    "portfolio_showcases": [
+      {
+        "url": "https://images.pexels.com/photos/326514/pexels-photo-326514.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "title": "Aetheria - Luxury E-Commerce Platform",
+        "category": "Web Design & Development",
+        "metrics": "+240% Conversion, Awwwards SOTD",
+        "usage": "Featured Portfolio Item 01"
+      },
+      {
+        "url": "https://images.pexels.com/photos/27141313/pexels-photo-27141313.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "title": "Vortex AI - Command & Control Dashboard",
+        "category": "SaaS Platform & Domain Setup",
+        "metrics": "Sub-50ms Latency, Full Brand System",
+        "usage": "Featured Portfolio Item 02"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjAzOTB8MHwxfHNlYXJjaHwyfHx3ZWIlMjBkZXNpZ24lMjBhZ2VuY3klMjBwb3J0Zm9saW98ZW58MHx8fHwxNzkwMDI2NjA5fDA&ixlib=rb-4.1.0&q=85",
+        "title": "KRONOS - Architectural Firm Digital Portal",
+        "category": "Brand Identity & Web Deployment",
+        "metrics": "100k+ Monthly Visits",
+        "usage": "Featured Portfolio Item 03"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1547658719-da2b51169166?crop=entropy&cs=srgb&fm=jpg&ixid=M3w8NjAzOTB8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXNpZ24lMjBhZ2VuY3klMjBwb3J0Zm9saW98ZW58MHx8fHwxNzkwMDI2NjA5fDA&ixlib=rb-4.1.0&q=85",
+        "title": "Solstice - High Fashion Banner & Campaign",
+        "category": "Banners, Logos & Marketing Assets",
+        "metrics": "Global Campaign launch",
+        "usage": "Featured Portfolio Item 04"
+      }
+    ],
+    "studio_team": [
+      {
+        "url": "https://images.pexels.com/photos/16323580/pexels-photo-16323580.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Lunar Design Studio Workspace & Developers",
+        "usage": "About Page Studio Visual"
+      }
+    ]
+  },
+  "component_structure": {
+    "header": {
+      "style": "Floating Glassmorphic Pill Header with dark backdrop blur (backdrop-blur-xl bg-[#08080B]/80 border border-white/10 z-50)",
+      "elements": [
+        "Brand Logo: Black rounded container, White serif 'Lunar Design', Red circle badge, Gold underline indicator",
+        "Nav links: Work, Manifesto, Services, About, Enquiry",
+        "Instagram Icon link + CTA Button: 'Start a Project'"
+      ]
+    },
+    "hero_section": {
+      "components": [
+        "Live status pill ('● OPEN FOR Q3/Q4 COMMISSION')",
+        "Line-by-line masked reveal title: 'WE CRAFT DIGITAL MONUMENTS THAT COMMAND ATTENTION.'",
+        "Sub-heading detailing services (Design, Logos, Banners, Domains, Hosting)",
+        "Interactive Lunar Sphere canvas with glowing gold ring and crimson pulse",
+        "Primary CTA button ('Explore Portfolio') + Secondary CTA ('Send Enquiry')"
+      ]
+    },
+    "marquee_ticker": {
+      "style": "Slow editorial motion using continuous keyframes or Framer Motion",
+      "items": [
+        "✦ CUSTOM WEB DEPLOYMENT",
+        "✦ BRAND LOGOS & VISUAL SYSTEMS",
+        "✦ CAMPAIGN BANNERS",
+        "✦ DOMAIN MANAGEMENT & HOSTING",
+        "✦ AWWWARDS QUALITY ASSURANCE"
+      ]
+    },
+    "manifesto_section": {
+      "title": "THE LUNAR MANIFESTO",
+      "chapters": [
+        {
+          "num": "01",
+          "heading": "REJECT THE TEMPLATE TEMPTATION",
+          "text": "Every digital interface we construct is crafted from first principles. Standard frameworks produce visual noise; bespoke art direction generates authority."
+        },
+        {
+          "num": "02",
+          "heading": "INFRASTRUCTURE IS AN ART FORM",
+          "text": "We do not merely design pixels. We provision high-speed managed hosting, configure redundant domain DNS, and optimize asset delivery pipelines."
+        },
+        {
+          "num": "03",
+          "heading": "EMOTION FIRST, METRICS FOLLOW",
+          "text": "Cinematic visual storytelling creates visceral brand desire. When visitors feel awe, engagement and conversion naturally surge."
+        }
+      ]
+    },
+    "portfolio_section": {
+      "filters": ["All", "Websites", "Brand Systems", "Banners & Media", "Domains & Hosting"],
+      "interactive_features": "Filter switching, hover tilt/scale effect, click to open full case study detail modal."
+    },
+    "services_section": {
+      "items": [
+        {"title": "Bespoke Web Design & Build", "desc": "Award-grade frontends built with smooth motion, responsive grids, and ultra-fast loading speeds."},
+        {"title": "Logo & Brand Systems", "desc": "Vector identity, serif wordmarks, gold & crimson color systems, and comprehensive brand books."},
+        {"title": "High-Impact Banners & Assets", "desc": "Cinematic social media banners, marketing collateral, and launch campaign visuals."},
+        {"title": "Domain & Infrastructure", "desc": "Complete domain acquisition, DNS routing, SSL management, and enterprise server provisioning."},
+        {"title": "Managed Hosting & Maintenance", "desc": "24/7 uptime monitoring, zero-downtime updates, backup automation, and continuous performance tuning."}
+      ]
+    },
+    "enquiry_section": {
+      "features": [
+        "Interactive service selection checkboxes (Web Design, Logo, Banners, Domains, Hosting)",
+        "Budget slider / selector",
+        "Client details input fields (Name, Email, Project Brief)",
+        "Submission handler storing responses in memory/state and showing high-contrast success notification via Sonner toast",
+        "Direct contact details & Instagram social link (@lunardesign.agency)"
+      ]
+    },
+    "footer": {
+      "style": "Deep dark surface with giant serif background watermark 'LUNAR', copyright, live local time clock, and quick links.",
+      "socials": [
+        {"name": "Instagram", "url": "https://instagram.com"},
+        {"name": "Twitter / X", "url": "https://x.com"},
+        {"name": "LinkedIn", "url": "https://linkedin.com"}
+      ]
+    }
+  },
+  "testing_and_attributes": {
+    "rule": "ALL interactive components, buttons, inputs, links, tabs, cards, and modal triggers MUST include explicit kebab-case data-testid attributes.",
+    "required_test_ids": [
+      "header-logo",
+      "nav-link-work",
+      "nav-link-manifesto",
+      "nav-link-services",
+      "nav-link-about",
+      "nav-link-enquiry",
+      "instagram-social-link",
+      "hero-start-project-button",
+      "hero-explore-work-button",
+      "manifesto-chapter-01",
+      "manifesto-chapter-02",
+      "manifesto-chapter-03",
+      "portfolio-filter-all",
+      "portfolio-filter-websites",
+      "portfolio-filter-brand-systems",
+      "portfolio-card-0",
+      "portfolio-card-1",
+      "portfolio-card-2",
+      "portfolio-modal-close-button",
+      "service-card-web-design",
+      "service-card-brand-systems",
+      "service-card-domain-hosting",
+      "enquiry-form",
+      "enquiry-input-name",
+      "enquiry-input-email",
+      "enquiry-input-message",
+      "enquiry-select-service-website",
+      "enquiry-select-service-logo",
+      "enquiry-select-service-domain",
+      "enquiry-submit-button",
+      "footer-instagram-link"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Ensure Google Fonts for 'Playfair Display' and 'Plus Jakarta Sans' are imported in frontend/src/index.css.",
+    "Implement smooth scrolling or Lenis wrapper behavior for continuous silky scroll feel.",
+    "Ensure all components use JS/JSX syntax as per project configuration.",
+    "Create an interactive Canvas or Framer-Motion animated sphere component for the hero section to deliver the 'lunar' aesthetic.",
+    "Verify every single button and form element has its designated data-testid attribute.",
+    "Ensure the enquiry form is completely functional with toast alerts upon submission."
+  ]
+}

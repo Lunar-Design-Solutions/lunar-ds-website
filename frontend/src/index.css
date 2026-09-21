@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 240 14% 4%;
+        --foreground: 43 27% 94%;
+        --card: 240 12% 8%;
+        --card-foreground: 43 27% 94%;
+        --popover: 240 12% 8%;
+        --popover-foreground: 43 27% 94%;
+        --primary: 43 27% 94%;
+        --primary-foreground: 240 14% 4%;
+        --secondary: 240 10% 12%;
+        --secondary-foreground: 43 27% 94%;
+        --muted: 240 10% 12%;
+        --muted-foreground: 40 8% 63%;
+        --accent: 46 65% 52%;
+        --accent-foreground: 240 14% 4%;
+        --destructive: 3 66% 47%;
+        --destructive-foreground: 43 27% 94%;
+        --border: 0 0% 100% / 0.08;
+        --input: 0 0% 100% / 0.1;
+        --ring: 46 65% 52%;
+        --radius: 0.5rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-white/10;
+    }
+    html {
+        scroll-behavior: auto;
+    }
+    body {
+        @apply bg-[#08080B] text-[#F4F1EA];
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }
+    ::selection {
+        background: #C8322B;
+        color: #F4F1EA;
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #08080B;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #26262e;
+        border-radius: 6px;
+    }
+}
+
+.font-display {
+    font-family: 'Marcellus', serif;
+}
+
+.grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes marquee-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+    animation: marquee-drift 48s linear infinite;
+}
+
+.mask-line {
+    overflow: hidden;
+    display: block;
+}
+
+.text-stroke-gold {
+    -webkit-text-stroke: 1px rgba(212, 175, 55, 0.35);
+    color: transparent;
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+    [data-debug-wrapper="true"] > * {
+        margin-left: inherit;
+        margin-right: inherit;
+        margin-top: inherit;
+        margin-bottom: inherit;
+        padding-left: inherit;
+        padding-right: inherit;
+        padding-top: inherit;
+        padding-bottom: inherit;
+        column-gap: inherit;
+        row-gap: inherit;
+        gap: inherit;
+        border-left-width: inherit;
+        border-right-width: inherit;
+        border-top-width: inherit;
+        border-bottom-width: inherit;
+        border-left-style: inherit;
+        border-right-style: inherit;
+        border-top-style: inherit;
+        border-bottom-style: inherit;
+        border-left-color: inherit;
+        border-right-color: inherit;
+        border-top-color: inherit;
+        border-bottom-color: inherit;
+    }
+}

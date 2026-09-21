@@ -1,0 +1,143 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, X } from "lucide-react";
+import { PORTFOLIO } from "@/data/content";
+import { EASE, Reveal } from "@/components/Reveal";
+
+const FILTERS = [
+  { id: "all", label: "All", testid: "portfolio-filter-all" },
+  { id: "Websites", label: "Websites", testid: "portfolio-filter-websites" },
+  { id: "Brand Systems", label: "Brand Systems", testid: "portfolio-filter-brand-systems" },
+  { id: "Banners & Media", label: "Banners & Media", testid: "portfolio-filter-banners" },
+  { id: "Domains & Hosting", label: "Domains & Hosting", testid: "portfolio-filter-domains" },
+];
+
+export const PortfolioGrid = ({ limit }) => {
+  const [filter, setFilter] = useState("all");
+  const [active, setActive] = useState(null);
+
+  const items = PORTFOLIO.filter((p) => filter === "all" || p.category === filter).slice(0, limit || 99);
+
+  return (
+    <div>
+      <div className="mb-10 flex flex-wrap gap-3">
+        {FILTERS.map((f) => (
+          <button
+            key={f.id}
+            data-testid={f.testid}
+            onClick={() => setFilter(f.id)}
+            className={`rounded-full border px-5 py-2 text-xs font-medium uppercase tracking-[0.15em] transition-all duration-300 ${
+              filter === f.id
+                ? "border-[#D4AF37] bg-[#D4AF37]/10 text-[#D4AF37]"
+                : "border-white/10 text-[#A39E93] hover:border-white/30 hover:text-[#F4F1EA]"
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <AnimatePresence mode="popLayout">
+          {items.map((p, i) => (
+            <motion.button
+              layout
+              key={p.id}
+              data-testid={`portfolio-card-${i}`}
+              onClick={() => setActive(p)}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.6, ease: EASE }}
+              className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-[#13131A] text-left ${
+                p.span === "wide" ? "md:col-span-2" : ""
+              }`}
+            >
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#08080B] via-transparent to-transparent" />
+                <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-[#08080B]/60 opacity-0 backdrop-blur transition-all duration-300 group-hover:opacity-100">
+                  <ArrowUpRight size={16} className="text-[#D4AF37]" />
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#C8322B]">{p.category}</p>
+                <h3 className="font-display mt-2 text-2xl text-[#F4F1EA]">{p.title}</h3>
+                <p className="mt-1 text-sm text-[#A39E93]">{p.subtitle}</p>
+              </div>
+            </motion.button>
+          ))}
+        </AnimatePresence>
+      </div>
+
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[90] flex items-end justify-center bg-[#08080B]/80 backdrop-blur-md sm:items-center sm:p-6"
+            onClick={() => setActive(null)}
+            data-testid="portfolio-modal-overlay"
+          >
+            <motion.div
+              initial={{ y: 80, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 80, opacity: 0 }}
+              transition={{ duration: 0.5, ease: EASE }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-white/10 bg-[#0E0E14] sm:rounded-3xl"
+              data-testid="portfolio-modal"
+            >
+              <div className="relative">
+                <img src={active.image} alt={active.title} className="aspect-[16/8] w-full object-cover" />
+                <button
+                  data-testid="portfolio-modal-close-button"
+                  onClick={() => setActive(null)}
+                  aria-label="Close case study"
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#08080B]/70 text-[#F4F1EA] backdrop-blur transition-colors hover:bg-[#C8322B]"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="p-8">
+                <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#C8322B]">{active.category}</p>
+                <h3 className="font-display mt-2 text-4xl">{active.title}</h3>
+                <p className="mt-1 text-[#A39E93]">{active.subtitle}</p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {active.metrics.map((m) => (
+                    <span
+                      key={m}
+                      className="rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 px-4 py-1.5 font-mono text-xs text-[#D4AF37]"
+                    >
+                      {m}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {active.stack.map((s) => (
+                    <span key={s} className="rounded-md bg-[#16161F] px-3 py-1.5 text-xs text-[#A39E93]">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+
+                <blockquote className="mt-8 border-l-2 border-[#C8322B] pl-5">
+                  <p className="font-display text-lg italic text-[#F4F1EA]">“{active.quote}”</p>
+                  <cite className="mt-2 block text-xs not-italic text-[#68645D]">— {active.client}</cite>
+                </blockquote>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
