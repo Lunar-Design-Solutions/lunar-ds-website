@@ -27,5 +27,8 @@ without it the frontend silently falls back to the bundled images in frontend/pu
   service (Render, Railway, Fly, a VPS, or a container), then point REACT_APP_BACKEND_URL at it.
 
 ## At go-live
-Update the absolute og:image / twitter:image URLs in frontend/public/index.html
-(currently the preview domain) to your production domain.
+Primary domain: lunar-ds.com (.co.uk redirects to it). og:image / twitter:image
+in frontend/public/index.html already point at https://lunar-ds.com/og-image.png.
+Claude workflow: pull repo -> `yarn build` frontend -> Cloudflare Pages (build output
+`build`, SPA fallback /* -> /index.html, env REACT_APP_BACKEND_URL) -> backend on a
+Python host with the backend/.env values -> point MongoDB (Atlas) via MONGO_URL.
