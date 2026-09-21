@@ -7,7 +7,7 @@ import { Marquee } from "@/components/Marquee";
 import { PortfolioGrid } from "@/components/PortfolioGrid";
 import { EASE, MaskedLine, Reveal } from "@/components/Reveal";
 import { MANIFESTO, SERVICES } from "@/data/content";
-import { getMoonPhase } from "@/utils/moonphase";
+import { getMoonPhase, isEclipseNight } from "@/utils/moonphase";
 
 const Hero = () => {
   const ref = useRef(null);
@@ -27,7 +27,13 @@ const Hero = () => {
           data-testid="hero-moon-phase"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#A39E93]">
-            Tonight — <span className="text-[var(--gold)]">{getMoonPhase().name}</span> · {getMoonPhase().illumination}% lit
+            Tonight —{" "}
+            {isEclipseNight() ? (
+              <span className="text-[var(--red)]">Blood Moon Eclipse</span>
+            ) : (
+              <span className="text-[var(--gold)]">{getMoonPhase().name}</span>
+            )}{" "}
+            · {getMoonPhase().illumination}% lit
           </span>
         </motion.div>
       </motion.div>

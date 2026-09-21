@@ -53,6 +53,11 @@
 - OG share card: branded 1200x630 og-image.png (logo, Marcellus wordmark, gold underline, service caps, orbit ring) + full Open Graph/Twitter meta in index.html. NOTE: og:image URL is absolute and points at the preview domain — update to the production domain at go-live
 - New-moon easter egg: --gold and --red CSS vars now both computed from real illumination; at new moon accents mute to stone (gold hsl(46 20% 45%), red hsl(3 30% 40%)), warming nightly to full-moon peak
 
+## Implemented (2026-09-21, round 6)
+- Red-wash hover on manifesto chapters + "Commission the next one" card only (user rejected extending it to service/portfolio cards — those keep original gold/dark hovers)
+- Fixed site-wide regression: Tailwind var(--gold)/--red classes with /opacity modifiers silently generated no CSS; replaced all 12 with explicit color-mix() arbitrary values (still phase-reactive)
+- Eclipse Mode: isEclipseNight() with curated total/partial lunar eclipse dates; hero moon turns blood-red (rusted dark side + red tint over lit face) and phase chip reads "Blood Moon Eclipse" on those nights only. NOT visually verifiable until an eclipse date (next: 12 Jan 2028) — logic unit-tested via node
+
 ## Next Tasks
 1. Add real testimonial quotes when clients provide them
 2. Confirm google-chrome exists in the production runtime, or keep fallback images

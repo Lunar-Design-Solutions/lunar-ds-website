@@ -43,3 +43,10 @@ export const getNextFullMoon = (date = new Date()) => {
   const daysTo = phase < 0.5 ? (0.5 - phase) * SYNODIC : (1.5 - phase) * SYNODIC;
   return new Date(date.getTime() + daysTo * 86400000);
 };
+
+const ECLIPSE_DATES = ["2026-03-03", "2026-08-28", "2028-01-12", "2028-07-06", "2028-12-31", "2029-06-26"];
+
+export const isEclipseNight = (date = new Date()) => {
+  const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  return ECLIPSE_DATES.includes(key);
+};

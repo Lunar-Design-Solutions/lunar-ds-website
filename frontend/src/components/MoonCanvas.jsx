@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { getMoonPhase } from "@/utils/moonphase";
+import { getMoonPhase, isEclipseNight } from "@/utils/moonphase";
 
 export const MoonCanvas = ({ className = "" }) => {
   const canvasRef = useRef(null);
@@ -65,11 +65,12 @@ export const MoonCanvas = ({ className = "" }) => {
       // moon rendered to match tonight's real lunar phase
       const p = getMoonPhase().phase;
       const term = Math.cos(2 * Math.PI * p);
+      const eclipse = isEclipseNight();
 
-      // dark side (faint earthshine)
+      // dark side (faint earthshine; rusted on eclipse nights)
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.fillStyle = "#16161d";
+      ctx.fillStyle = eclipse ? "#1f0f10" : "#16161d";
       ctx.fill();
 
       // lit region: limb semicircle closed by the terminator ellipse
@@ -101,6 +102,10 @@ export const MoonCanvas = ({ className = "" }) => {
           ctx.fill();
         }
       );
+      if (eclipse) {
+        ctx.fillStyle = "rgba(160, 40, 28, 0.55)";
+        ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
+      }
       ctx.restore();
 
       // limb outline
