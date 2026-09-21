@@ -44,6 +44,11 @@
 - Auto-updating portfolio screenshots: backend captures live sites via headless Chrome on startup + daily + manual POST /api/screenshots/refresh, served at GET /api/screenshots/{site}.png with frontend fallback to bundled images
 - Testimonial slot in every case-study modal ("Client words" — placeholder until real quotes provided)
 
+## Implemented (2026-09-21, round 4)
+- Favicon set from client logo: favicon.ico (16/32/48), 32/16 PNGs, apple-touch-icon (180), android-chrome 192/512, site.webmanifest; index.html head updated (theme-color #08080B, real meta description)
+- Enquiry autoreply: instant branded dark/gold confirmation email to the enquirer (server-side template, reply-to = owner, rate-limited to 3/hour per email to prevent abuse)
+- Footer "next full moon" line (astronomically computed) telling regulars when the gold accent peaks
+
 ## Next Tasks
 1. Add real testimonial quotes when clients provide them
 2. Confirm google-chrome exists in the production runtime, or keep fallback images

@@ -29,3 +29,9 @@ export const getPhaseGold = (date = new Date()) => {
   const l = Math.round(52 + 2 * t);
   return `hsl(${h} ${s}% ${l}%)`;
 };
+
+export const getNextFullMoon = (date = new Date()) => {
+  const { phase } = getMoonPhase(date);
+  const daysTo = phase < 0.5 ? (0.5 - phase) * SYNODIC : (1.5 - phase) * SYNODIC;
+  return new Date(date.getTime() + daysTo * 86400000);
+};

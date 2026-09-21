@@ -179,6 +179,41 @@ async def _notify_owner(enquiry: Enquiry) -> None:
         logger.error(f"Enquiry email notification failed: {e}")
 
 
+def _autoreply_html(enquiry: Enquiry) -> str:
+    services = ", ".join(escape(s) for s in enquiry.services) or "to be scoped together"
+    return (
+        '<table role="presentation" width="100%" style="font-family:Arial,sans-serif;background:#08080B;padding:32px">'
+        '<tr><td>'
+        '<table role="presentation" width="100%" style="max-width:520px;background:#13131A;border:1px solid #26262e;padding:32px">'
+        f'<tr><td><p style="font-family:Georgia,serif;color:#D4AF37;font-size:12px;letter-spacing:3px;text-transform:uppercase;margin:0">Lunar Design</p>'
+        f'<h1 style="font-family:Georgia,serif;color:#F4F1EA;font-weight:normal;font-size:26px;margin:16px 0">Transmission received, {escape(enquiry.name)}.</h1>'
+        f'<p style="color:#A39E93;font-size:14px;line-height:22px">Thank you for your enquiry. Your project brief has landed safely — covering <strong style="color:#F4F1EA">{services}</strong>.</p>'
+        '<p style="color:#A39E93;font-size:14px;line-height:22px">A real person from our family studio will reply within one business day with a scoped plan and honest pricing. No ticket queues, no account managers.</p>'
+        '<p style="color:#68645D;font-size:12px;line-height:18px;margin-top:24px;border-top:1px solid #26262e;padding-top:16px">'
+        f'Sent by {escape(EMAIL_FROM_NAME)}. We never ask for your password or card details by email.</p>'
+        '</td></tr></table></td></tr></table>'
+    )
+
+
+async def _send_autoreply(enquiry: Enquiry) -> None:
+    try:
+        one_hour_ago = datetime.now(timezone.utc).timestamp() - 3600
+        recent = await db.enquiries.count_documents(
+            {"email": enquiry.email, "created_at": {"$gte": datetime.fromtimestamp(one_hour_ago, timezone.utc).isoformat()}}
+        )
+        if recent > 3:
+            logger.info(f"Autoreply skipped (rate limit): {enquiry.email}")
+            return
+        await send_email(
+            to=enquiry.email,
+            subject=f"We received your project enquiry - {EMAIL_FROM_NAME}",
+            html=_autoreply_html(enquiry),
+            reply_to=OWNER_EMAIL,
+        )
+    except Exception as e:
+        logger.error(f"Enquiry autoreply failed: {e}")
+
+
 # --- Routes ---
 @api_router.get("/")
 async def root():
@@ -192,6 +227,7 @@ async def create_enquiry(payload: EnquiryCreate):
     doc["created_at"] = doc["created_at"].isoformat()
     await db.enquiries.insert_one(doc)
     asyncio.create_task(_notify_owner(enquiry))
+    asyncio.create_task(_send_autoreply(enquiry))
     return enquiry
 
 

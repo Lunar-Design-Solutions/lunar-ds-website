@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Instagram } from "lucide-react";
 import { INSTAGRAM_URL } from "@/data/content";
+import { getNextFullMoon } from "@/utils/moonphase";
 
 export const Footer = () => {
   const [time, setTime] = useState("");
@@ -65,6 +66,11 @@ export const Footer = () => {
           </a>
           <p className="mt-6 font-mono text-xs text-[#68645D]" data-testid="footer-local-time">
             LOCAL TIME — {time}
+          </p>
+          <p className="mt-2 font-mono text-xs text-[#68645D]" data-testid="footer-next-full-moon">
+            NEXT FULL MOON —{" "}
+            {getNextFullMoon().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })} · GOLD
+            AT PEAK
           </p>
         </div>
       </div>
