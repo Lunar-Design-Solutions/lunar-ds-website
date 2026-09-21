@@ -30,7 +30,7 @@ export const PortfolioGrid = ({ limit }) => {
               onClick={() => setFilter(c)}
               className={`rounded-full border px-5 py-2 text-xs font-medium uppercase tracking-[0.15em] transition-all duration-300 ${
                 filter === c
-                  ? "border-[var(--gold)] bg-[var(--gold)]/10 text-[var(--gold)]"
+                  ? "border-[var(--gold)] bg-[color-mix(in_srgb,var(--gold)_10%,transparent)] text-[var(--gold)]"
                   : "border-white/10 text-[#A39E93] hover:border-white/30 hover:text-[#F4F1EA]"
               }`}
             >
@@ -118,7 +118,7 @@ export const PortfolioGrid = ({ limit }) => {
                   {active.metrics.map((m) => (
                     <span
                       key={m}
-                      className="rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-4 py-1.5 font-mono text-xs text-[var(--gold)]"
+                      className="rounded-full border border-[color-mix(in_srgb,var(--gold)_40%,transparent)] bg-[color-mix(in_srgb,var(--gold)_10%,transparent)] px-4 py-1.5 font-mono text-xs text-[var(--gold)]"
                     >
                       {m}
                     </span>

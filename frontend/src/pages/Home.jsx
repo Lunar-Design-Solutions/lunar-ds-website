@@ -37,7 +37,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[var(--red)]/40 bg-[var(--red)]/10 px-4 py-1.5"
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[color-mix(in_srgb,var(--red)_40%,transparent)] bg-[color-mix(in_srgb,var(--red)_10%,transparent)] px-4 py-1.5"
           data-testid="hero-status-pill"
         >
           <span className="relative flex h-2 w-2">
@@ -115,9 +115,9 @@ const Manifesto = () => (
     <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-3">
       {MANIFESTO.map((c, i) => (
         <Reveal key={c.num} delay={i * 0.15} className="bg-[#0E0E14]">
-          <article className="group h-full p-8 transition-colors duration-500 hover:bg-[#13131A]" data-testid={`manifesto-chapter-${c.num}`}>
+          <article className="group h-full p-8 transition-colors duration-500 hover:bg-[color-mix(in_srgb,var(--red)_10%,transparent)]" data-testid={`manifesto-chapter-${c.num}`}>
             <span className="font-mono text-sm tracking-widest text-[var(--gold)]">{c.num}</span>
-            <div className="mt-6 h-px w-10 bg-[var(--gold)]/50 transition-all duration-500 group-hover:w-full" />
+            <div className="mt-6 h-px w-10 bg-[color-mix(in_srgb,var(--gold)_50%,transparent)] transition-all duration-500 group-hover:w-full" />
             <h3 className="font-display mt-6 text-xl text-[#F4F1EA] sm:text-2xl">{c.heading}</h3>
             <p className="mt-4 text-sm leading-relaxed text-[#A39E93]">{c.text}</p>
           </article>
@@ -146,7 +146,7 @@ const Services = () => (
         <Reveal key={s.id} delay={i * 0.08} className={i === 0 ? "lg:col-span-2" : ""}>
           <article
             data-testid={`service-card-${s.id}`}
-            className="group h-full rounded-2xl border border-white/10 bg-[#13131A] p-8 transition-all duration-500 hover:border-[var(--gold)]/40 hover:bg-[#1A1A24]"
+            className="group h-full rounded-2xl border border-white/10 bg-[#13131A] p-8 transition-all duration-500 hover:border-[color-mix(in_srgb,var(--gold)_40%,transparent)] hover:bg-[#1A1A24]"
           >
             <p className="font-mono text-[11px] tracking-[0.25em] text-[#68645D]">{s.tag}</p>
             <h3 className="font-display mt-4 text-xl text-[#F4F1EA] transition-colors duration-300 group-hover:text-[var(--gold)] sm:text-2xl">
@@ -160,7 +160,7 @@ const Services = () => (
         <Link
           to="/enquiry"
           data-testid="services-cta-card"
-          className="group flex h-full min-h-[180px] flex-col justify-between rounded-2xl border border-[var(--red)]/40 bg-[var(--red)]/10 p-8 transition-all duration-500 hover:bg-[var(--red)]/20"
+          className="group flex h-full min-h-[180px] flex-col justify-between rounded-2xl border border-[color-mix(in_srgb,var(--red)_40%,transparent)] bg-[color-mix(in_srgb,var(--red)_10%,transparent)] p-8 transition-all duration-500 hover:border-[color-mix(in_srgb,var(--red)_60%,transparent)] hover:bg-[color-mix(in_srgb,var(--red)_30%,transparent)]"
         >
           <p className="font-mono text-[11px] tracking-[0.25em] text-[var(--red)]">06 / YOURS</p>
           <div className="flex items-center justify-between">

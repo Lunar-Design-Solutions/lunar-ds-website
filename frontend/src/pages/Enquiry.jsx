@@ -46,7 +46,7 @@ export default function Enquiry() {
   };
 
   const inputCls =
-    "w-full rounded-xl border border-white/10 bg-[#0E0E14] px-5 py-4 text-sm text-[#F4F1EA] placeholder-[#68645D] outline-none transition-all duration-300 focus:border-[var(--gold)]/60 focus:bg-[#13131A]";
+    "w-full rounded-xl border border-white/10 bg-[#0E0E14] px-5 py-4 text-sm text-[#F4F1EA] placeholder-[#68645D] outline-none transition-all duration-300 focus:border-[color-mix(in_srgb,var(--gold)_60%,transparent)] focus:bg-[#13131A]";
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-28 pt-40" data-testid="enquiry-page">
@@ -71,7 +71,7 @@ export default function Enquiry() {
               target="_blank"
               rel="noopener noreferrer"
               data-testid="enquiry-instagram-link"
-              className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#13131A] p-6 transition-all duration-300 hover:border-[var(--red)]/50"
+              className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#13131A] p-6 transition-all duration-300 hover:border-[color-mix(in_srgb,var(--red)_50%,transparent)]"
             >
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#68645D]">Follow the studio</p>
@@ -94,7 +94,7 @@ export default function Enquiry() {
                   onClick={() => toggleService(s.id)}
                   className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
                     services.includes(s.id)
-                      ? "border-[var(--red)] bg-[var(--red)]/15 text-[#F4F1EA]"
+                      ? "border-[var(--red)] bg-[color-mix(in_srgb,var(--red)_15%,transparent)] text-[#F4F1EA]"
                       : "border-white/10 text-[#A39E93] hover:border-white/30"
                   }`}
                 >
@@ -113,7 +113,7 @@ export default function Enquiry() {
                   onClick={() => setBudget(budget === b ? null : b)}
                   className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
                     budget === b
-                      ? "border-[var(--gold)] bg-[var(--gold)]/15 text-[var(--gold)]"
+                      ? "border-[var(--gold)] bg-[color-mix(in_srgb,var(--gold)_15%,transparent)] text-[var(--gold)]"
                       : "border-white/10 text-[#A39E93] hover:border-white/30"
                   }`}
                 >
