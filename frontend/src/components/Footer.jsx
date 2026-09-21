@@ -61,7 +61,7 @@ export const Footer = () => {
             data-testid="footer-instagram-link"
             className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-sm text-[#F4F1EA] transition-all duration-300 hover:border-[#C8322B] hover:text-[#C8322B]"
           >
-            <Instagram size={15} /> @lunardesign.agency
+            <Instagram size={15} /> @lunardesignsolutions
           </a>
           <p className="mt-6 font-mono text-xs text-[#68645D]" data-testid="footer-local-time">
             LOCAL TIME — {time}

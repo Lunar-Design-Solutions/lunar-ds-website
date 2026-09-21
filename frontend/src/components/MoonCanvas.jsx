@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { getMoonPhase } from "@/utils/moonphase";
 
 export const MoonCanvas = ({ className = "" }) => {
   const canvasRef = useRef(null);
@@ -61,22 +62,37 @@ export const MoonCanvas = ({ className = "" }) => {
       ctx.stroke();
       ctx.restore();
 
-      // moon body
+      // moon rendered to match tonight's real lunar phase
+      const p = getMoonPhase().phase;
+      const term = Math.cos(2 * Math.PI * p);
+
+      // dark side (faint earthshine)
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.fillStyle = "#16161d";
+      ctx.fill();
+
+      // lit region: limb semicircle closed by the terminator ellipse
+      ctx.save();
+      ctx.beginPath();
+      if (p < 0.5) {
+        ctx.arc(cx, cy, R, -Math.PI / 2, Math.PI / 2, false);
+        ctx.ellipse(cx, cy, Math.max(R * Math.abs(term), 0.001), R, 0, Math.PI / 2, -Math.PI / 2, term < 0);
+      } else {
+        ctx.arc(cx, cy, R, Math.PI / 2, Math.PI * 1.5, false);
+        ctx.ellipse(cx, cy, Math.max(R * Math.abs(term), 0.001), R, 0, -Math.PI / 2, Math.PI / 2, term > 0);
+      }
+      ctx.closePath();
+      ctx.clip();
+
       const body = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.35, R * 0.1, cx, cy, R);
       body.addColorStop(0, "#f4f1ea");
       body.addColorStop(0.55, "#b9b4a8");
-      body.addColorStop(0.85, "#55524c");
-      body.addColorStop(1, "#1a1a20");
-      ctx.beginPath();
-      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      body.addColorStop(0.9, "#6b675e");
+      body.addColorStop(1, "#3a3833");
       ctx.fillStyle = body;
-      ctx.fill();
+      ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
 
-      // craters
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.clip();
       ctx.fillStyle = "rgba(0,0,0,0.14)";
       [[-0.3, -0.15, 0.14], [0.25, 0.3, 0.1], [0.1, -0.42, 0.08], [-0.42, 0.35, 0.09], [0.45, -0.1, 0.06]].forEach(
         ([ox, oy, or_]) => {
@@ -85,14 +101,14 @@ export const MoonCanvas = ({ className = "" }) => {
           ctx.fill();
         }
       );
-      // shadow terminator
-      const shadow = ctx.createRadialGradient(cx + R * 0.9, cy + R * 0.4, R * 0.2, cx, cy, R * 1.6);
-      shadow.addColorStop(0, "rgba(8,8,11,0.85)");
-      shadow.addColorStop(0.6, "rgba(8,8,11,0.35)");
-      shadow.addColorStop(1, "rgba(8,8,11,0)");
-      ctx.fillStyle = shadow;
-      ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
       ctx.restore();
+
+      // limb outline
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(212,175,55,0.25)";
+      ctx.lineWidth = devicePixelRatio;
+      ctx.stroke();
 
       // crimson pulse
       const pulse = (t % 240) / 240;

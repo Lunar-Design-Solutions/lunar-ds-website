@@ -3,9 +3,9 @@ import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 
 const STATS = [
-  { value: "60+", label: "Projects launched" },
-  { value: "99.99%", label: "Hosting uptime" },
-  { value: "12ms", label: "Median response" },
+  { value: "2", label: "Live client sites" },
+  { value: "1", label: "Point of contact" },
+  { value: "0", label: "Account managers" },
   { value: "24/7", label: "Monitoring & care" },
 ];
 
@@ -24,20 +24,21 @@ export default function About() {
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">About the Studio</p>
         <h1 className="font-display mt-4 max-w-3xl text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-          A small studio with <span className="text-[#D4AF37]">orbital reach</span>.
+          A family studio with <span className="text-[#D4AF37]">orbital reach</span>.
         </h1>
       </Reveal>
 
       <div className="mt-16 grid gap-12 lg:grid-cols-2">
         <Reveal className="space-y-6 text-lg font-light leading-relaxed text-[#A39E93]">
           <p>
-            Lunar Design exists for brands that refuse to blend in. We are designers and engineers in equal measure —
-            a studio that sketches the identity, builds the interface, registers the domain and keeps the servers
-            humming long after launch day.
+            Lunar Design is a family-run freelance studio — no account managers, no hand-offs, no agency theatre.
+            The same people who sketch your identity also build your site, register your domain and keep your
+            hosting humming long after launch day.
           </p>
           <p>
-            Most agencies hand you a design file and disappear. We stay in orbit: deploying, maintaining, tuning and
-            evolving your digital presence so it never drifts into the dark.
+            Most agencies hand you a design file and disappear. As a family business we stay in orbit: deploying,
+            maintaining, tuning and evolving your digital presence so it never drifts into the dark — and when you
+            call, you speak directly to the person who built it.
           </p>
           <p className="font-display text-xl text-[#F4F1EA]">
             Design is the signal. Infrastructure is the gravity. We deliver both.

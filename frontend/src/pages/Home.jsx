@@ -7,6 +7,7 @@ import { Marquee } from "@/components/Marquee";
 import { PortfolioGrid } from "@/components/PortfolioGrid";
 import { EASE, MaskedLine, Reveal } from "@/components/Reveal";
 import { MANIFESTO, SERVICES } from "@/data/content";
+import { getMoonPhase } from "@/utils/moonphase";
 
 const Hero = () => {
   const ref = useRef(null);
@@ -18,6 +19,17 @@ const Hero = () => {
     <section ref={ref} className="relative flex min-h-screen items-center overflow-hidden pt-28" data-testid="hero-section">
       <motion.div style={{ y: moonY }} className="absolute inset-y-0 right-0 hidden w-1/2 lg:block">
         <MoonCanvas />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/10 bg-[#08080B]/70 px-4 py-2 backdrop-blur"
+          data-testid="hero-moon-phase"
+        >
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#A39E93]">
+            Tonight — <span className="text-[#D4AF37]">{getMoonPhase().name}</span> · {getMoonPhase().illumination}% lit
+          </span>
+        </motion.div>
       </motion.div>
 
       <motion.div style={{ y: textY }} className="relative z-10 mx-auto w-full max-w-6xl px-6">

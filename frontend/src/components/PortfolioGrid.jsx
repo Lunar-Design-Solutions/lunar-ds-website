@@ -4,13 +4,7 @@ import { ArrowUpRight, X } from "lucide-react";
 import { PORTFOLIO } from "@/data/content";
 import { EASE, Reveal } from "@/components/Reveal";
 
-const FILTERS = [
-  { id: "all", label: "All", testid: "portfolio-filter-all" },
-  { id: "Websites", label: "Websites", testid: "portfolio-filter-websites" },
-  { id: "Brand Systems", label: "Brand Systems", testid: "portfolio-filter-brand-systems" },
-  { id: "Banners & Media", label: "Banners & Media", testid: "portfolio-filter-banners" },
-  { id: "Domains & Hosting", label: "Domains & Hosting", testid: "portfolio-filter-domains" },
-];
+const CATEGORIES = ["all", ...new Set(PORTFOLIO.map((p) => p.category))];
 
 export const PortfolioGrid = ({ limit }) => {
   const [filter, setFilter] = useState("all");
@@ -20,22 +14,24 @@ export const PortfolioGrid = ({ limit }) => {
 
   return (
     <div>
-      <div className="mb-10 flex flex-wrap gap-3">
-        {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            data-testid={f.testid}
-            onClick={() => setFilter(f.id)}
-            className={`rounded-full border px-5 py-2 text-xs font-medium uppercase tracking-[0.15em] transition-all duration-300 ${
-              filter === f.id
-                ? "border-[#D4AF37] bg-[#D4AF37]/10 text-[#D4AF37]"
-                : "border-white/10 text-[#A39E93] hover:border-white/30 hover:text-[#F4F1EA]"
-            }`}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
+      {CATEGORIES.length > 2 && (
+        <div className="mb-10 flex flex-wrap gap-3">
+          {CATEGORIES.map((c) => (
+            <button
+              key={c}
+              data-testid={`portfolio-filter-${c === "all" ? "all" : c.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+              onClick={() => setFilter(c)}
+              className={`rounded-full border px-5 py-2 text-xs font-medium uppercase tracking-[0.15em] transition-all duration-300 ${
+                filter === c
+                  ? "border-[#D4AF37] bg-[#D4AF37]/10 text-[#D4AF37]"
+                  : "border-white/10 text-[#A39E93] hover:border-white/30 hover:text-[#F4F1EA]"
+              }`}
+            >
+              {c === "all" ? "All" : c}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         <AnimatePresence mode="popLayout">
@@ -129,10 +125,18 @@ export const PortfolioGrid = ({ limit }) => {
                   ))}
                 </div>
 
-                <blockquote className="mt-8 border-l-2 border-[#C8322B] pl-5">
-                  <p className="font-display text-lg italic text-[#F4F1EA]">“{active.quote}”</p>
-                  <cite className="mt-2 block text-xs not-italic text-[#68645D]">— {active.client}</cite>
-                </blockquote>
+                <p className="mt-8 text-base leading-relaxed text-[#A39E93]">{active.blurb}</p>
+                {active.link && (
+                  <a
+                    href={active.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid="portfolio-modal-live-link"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#F4F1EA] px-6 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-[#08080B] transition-colors duration-300 hover:bg-[#D4AF37]"
+                  >
+                    Visit live site <ArrowUpRight size={14} />
+                  </a>
+                )}
               </div>
             </motion.div>
           </motion.div>
