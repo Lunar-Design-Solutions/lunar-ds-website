@@ -27,7 +27,7 @@ const Hero = () => {
           data-testid="hero-moon-phase"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#A39E93]">
-            Tonight — <span className="text-[#D4AF37]">{getMoonPhase().name}</span> · {getMoonPhase().illumination}% lit
+            Tonight — <span className="text-[var(--gold)]">{getMoonPhase().name}</span> · {getMoonPhase().illumination}% lit
           </span>
         </motion.div>
       </motion.div>
@@ -52,7 +52,7 @@ const Hero = () => {
         <h1 className="font-display max-w-3xl text-4xl leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">
           <MaskedLine delay={0.35}>We craft digital</MaskedLine>
           <MaskedLine delay={0.5}>
-            <span className="text-[#D4AF37]">monuments</span> that
+            <span className="text-[var(--gold)]">monuments</span> that
           </MaskedLine>
           <MaskedLine delay={0.65}>command attention.</MaskedLine>
         </h1>
@@ -76,7 +76,7 @@ const Hero = () => {
           <Link
             to="/work"
             data-testid="hero-explore-work-button"
-            className="group inline-flex items-center gap-2 rounded-full bg-[#F4F1EA] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#08080B] transition-all duration-300 hover:bg-[#D4AF37]"
+            className="group inline-flex items-center gap-2 rounded-full bg-[#F4F1EA] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[#08080B] transition-all duration-300 hover:bg-[var(--gold)]"
           >
             Explore Portfolio
             <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -116,8 +116,8 @@ const Manifesto = () => (
       {MANIFESTO.map((c, i) => (
         <Reveal key={c.num} delay={i * 0.15} className="bg-[#0E0E14]">
           <article className="group h-full p-8 transition-colors duration-500 hover:bg-[#13131A]" data-testid={`manifesto-chapter-${c.num}`}>
-            <span className="font-mono text-sm tracking-widest text-[#D4AF37]">{c.num}</span>
-            <div className="mt-6 h-px w-10 bg-[#D4AF37]/50 transition-all duration-500 group-hover:w-full" />
+            <span className="font-mono text-sm tracking-widest text-[var(--gold)]">{c.num}</span>
+            <div className="mt-6 h-px w-10 bg-[var(--gold)]/50 transition-all duration-500 group-hover:w-full" />
             <h3 className="font-display mt-6 text-xl text-[#F4F1EA] sm:text-2xl">{c.heading}</h3>
             <p className="mt-4 text-sm leading-relaxed text-[#A39E93]">{c.text}</p>
           </article>
@@ -146,10 +146,10 @@ const Services = () => (
         <Reveal key={s.id} delay={i * 0.08} className={i === 0 ? "lg:col-span-2" : ""}>
           <article
             data-testid={`service-card-${s.id}`}
-            className="group h-full rounded-2xl border border-white/10 bg-[#13131A] p-8 transition-all duration-500 hover:border-[#D4AF37]/40 hover:bg-[#1A1A24]"
+            className="group h-full rounded-2xl border border-white/10 bg-[#13131A] p-8 transition-all duration-500 hover:border-[var(--gold)]/40 hover:bg-[#1A1A24]"
           >
             <p className="font-mono text-[11px] tracking-[0.25em] text-[#68645D]">{s.tag}</p>
-            <h3 className="font-display mt-4 text-xl text-[#F4F1EA] transition-colors duration-300 group-hover:text-[#D4AF37] sm:text-2xl">
+            <h3 className="font-display mt-4 text-xl text-[#F4F1EA] transition-colors duration-300 group-hover:text-[var(--gold)] sm:text-2xl">
               {s.title}
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-[#A39E93]">{s.desc}</p>
@@ -183,7 +183,7 @@ const WorkPreview = () => (
       <Link
         to="/work"
         data-testid="work-preview-view-all"
-        className="group inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-[#A39E93] transition-colors hover:text-[#D4AF37]"
+        className="group inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] text-[#A39E93] transition-colors hover:text-[var(--gold)]"
       >
         View all work
         <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
@@ -196,14 +196,14 @@ const WorkPreview = () => (
 const CTABand = () => (
   <section className="border-t border-white/10 px-6 py-32 text-center" data-testid="cta-band">
     <Reveal>
-      <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">The next phase</p>
+      <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--gold)]">The next phase</p>
       <h2 className="font-display mx-auto mt-6 max-w-3xl text-4xl leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
         Your brand deserves a <span className="text-[#C8322B]">gravitational pull</span>.
       </h2>
       <Link
         to="/enquiry"
         data-testid="cta-band-button"
-        className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#C8322B] px-9 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[#D4AF37] hover:text-[#08080B]"
+        className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#C8322B] px-9 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[#08080B]"
       >
         Start a Project <ArrowRight size={16} />
       </Link>

@@ -46,7 +46,7 @@ export default function Enquiry() {
   };
 
   const inputCls =
-    "w-full rounded-xl border border-white/10 bg-[#0E0E14] px-5 py-4 text-sm text-[#F4F1EA] placeholder-[#68645D] outline-none transition-all duration-300 focus:border-[#D4AF37]/60 focus:bg-[#13131A]";
+    "w-full rounded-xl border border-white/10 bg-[#0E0E14] px-5 py-4 text-sm text-[#F4F1EA] placeholder-[#68645D] outline-none transition-all duration-300 focus:border-[var(--gold)]/60 focus:bg-[#13131A]";
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-28 pt-40" data-testid="enquiry-page">
@@ -54,7 +54,7 @@ export default function Enquiry() {
         <Reveal className="lg:col-span-2">
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">Enquiry</p>
           <h1 className="font-display mt-4 text-4xl leading-[1.08] tracking-tight sm:text-5xl">
-            Begin the <span className="text-[#D4AF37]">ascent</span>.
+            Begin the <span className="text-[var(--gold)]">ascent</span>.
           </h1>
           <p className="mt-6 max-w-md text-lg font-light leading-relaxed text-[#A39E93]">
             Tell us what you're building. We respond to every serious enquiry within one business day with a scoped
@@ -84,7 +84,7 @@ export default function Enquiry() {
 
         <Reveal delay={0.15} className="lg:col-span-3">
           <form onSubmit={submit} data-testid="enquiry-form" className="rounded-3xl border border-white/10 bg-[#0E0E14] p-8">
-            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#D4AF37]">What do you need?</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--gold)]">What do you need?</p>
             <div className="mt-4 flex flex-wrap gap-2.5">
               {SERVICE_OPTIONS.map((s) => (
                 <button
@@ -103,7 +103,7 @@ export default function Enquiry() {
               ))}
             </div>
 
-            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.25em] text-[#D4AF37]">Budget range</p>
+            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--gold)]">Budget range</p>
             <div className="mt-4 flex flex-wrap gap-2.5">
               {BUDGETS.map((b) => (
                 <button
@@ -113,7 +113,7 @@ export default function Enquiry() {
                   onClick={() => setBudget(budget === b ? null : b)}
                   className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
                     budget === b
-                      ? "border-[#D4AF37] bg-[#D4AF37]/15 text-[#D4AF37]"
+                      ? "border-[var(--gold)] bg-[var(--gold)]/15 text-[var(--gold)]"
                       : "border-white/10 text-[#A39E93] hover:border-white/30"
                   }`}
                 >
@@ -155,7 +155,7 @@ export default function Enquiry() {
               type="submit"
               disabled={sending}
               data-testid="enquiry-submit-button"
-              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#C8322B] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[#D4AF37] hover:text-[#08080B] disabled:opacity-60 sm:w-auto"
+              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#C8322B] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[#08080B] disabled:opacity-60 sm:w-auto"
             >
               {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               {sending ? "Transmitting…" : "Launch Enquiry"}

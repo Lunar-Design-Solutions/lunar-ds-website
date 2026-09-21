@@ -12,7 +12,7 @@ export const Marquee = () => {
                 key={`${half}-${i}`}
                 className="font-display flex items-center whitespace-nowrap px-8 text-lg tracking-wide text-[#A39E93]"
               >
-                <span className="mr-8 text-[#D4AF37]">✦</span>
+                <span className="mr-8 text-[var(--gold)]">✦</span>
                 {item}
               </span>
             ))}

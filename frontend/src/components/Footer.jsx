@@ -44,7 +44,7 @@ export const Footer = () => {
                 key={l.to}
                 to={l.to}
                 data-testid={`footer-link-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
-                className="text-sm text-[#A39E93] transition-colors duration-300 hover:text-[#D4AF37]"
+                className="text-sm text-[#A39E93] transition-colors duration-300 hover:text-[var(--gold)]"
               >
                 {l.label}
               </Link>

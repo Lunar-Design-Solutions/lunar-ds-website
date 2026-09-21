@@ -19,3 +19,13 @@ export const getMoonPhase = (date = new Date()) => {
   const name = NAMES[Math.round(phase * 8) % 8];
   return { phase, illumination, name };
 };
+
+// Gold accent warms from pale gold toward amber as the moon fills
+export const getPhaseGold = (date = new Date()) => {
+  const { illumination } = getMoonPhase(date);
+  const t = illumination / 100;
+  const h = Math.round(46 - 14 * t);
+  const s = Math.round(65 + 14 * t);
+  const l = Math.round(52 + 2 * t);
+  return `hsl(${h} ${s}% ${l}%)`;
+};

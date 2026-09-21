@@ -29,8 +29,8 @@ export const Nav = () => {
               key={l.to}
               to={l.to}
               data-testid={l.testid}
-              className={`text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-300 hover:text-[#D4AF37] ${
-                location.pathname === l.to ? "text-[#D4AF37]" : "text-[#A39E93]"
+              className={`text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-300 hover:text-[var(--gold)] ${
+                location.pathname === l.to ? "text-[var(--gold)]" : "text-[#A39E93]"
               }`}
             >
               {l.label}
@@ -52,7 +52,7 @@ export const Nav = () => {
           <Link
             to="/enquiry"
             data-testid="nav-link-enquiry"
-            className="rounded-full bg-[#F4F1EA] px-5 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#08080B] transition-all duration-300 hover:bg-[#D4AF37]"
+            className="rounded-full bg-[#F4F1EA] px-5 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#08080B] transition-all duration-300 hover:bg-[var(--gold)]"
           >
             Start a Project
           </Link>

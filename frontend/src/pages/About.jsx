@@ -24,7 +24,7 @@ export default function About() {
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">About the Studio</p>
         <h1 className="font-display mt-4 max-w-3xl text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-          A family studio with <span className="text-[#D4AF37]">orbital reach</span>.
+          A family studio with <span className="text-[var(--gold)]">orbital reach</span>.
         </h1>
       </Reveal>
 
@@ -61,7 +61,7 @@ export default function About() {
         {STATS.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.1} className="bg-[#0E0E14]">
             <div className="p-8 text-center" data-testid={`about-stat-${i}`}>
-              <p className="font-display text-3xl text-[#D4AF37] sm:text-4xl">{s.value}</p>
+              <p className="font-display text-3xl text-[var(--gold)] sm:text-4xl">{s.value}</p>
               <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-[#68645D]">{s.label}</p>
             </div>
           </Reveal>
@@ -76,7 +76,7 @@ export default function About() {
           {CAPABILITIES.map((c, i) => (
             <Reveal key={c} delay={i * 0.07}>
               <div className="flex items-center gap-4 rounded-xl border border-white/10 bg-[#13131A] p-5" data-testid={`about-capability-${i}`}>
-                <span className="font-mono text-xs text-[#D4AF37]">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-xs text-[var(--gold)]">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-sm text-[#F4F1EA]">{c}</span>
               </div>
             </Reveal>
@@ -88,7 +88,7 @@ export default function About() {
         <Link
           to="/enquiry"
           data-testid="about-cta-button"
-          className="inline-flex items-center gap-2 rounded-full bg-[#F4F1EA] px-9 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#08080B] transition-all duration-300 hover:bg-[#D4AF37]"
+          className="inline-flex items-center gap-2 rounded-full bg-[#F4F1EA] px-9 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#08080B] transition-all duration-300 hover:bg-[var(--gold)]"
         >
           Work with us <ArrowRight size={16} />
         </Link>

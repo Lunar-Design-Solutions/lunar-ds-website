@@ -14,6 +14,7 @@ from urllib.parse import urlparse
 import httpx
 from dotenv import load_dotenv
 from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi.responses import FileResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from starlette.middleware.cors import CORSMiddleware
@@ -201,6 +202,59 @@ async def list_enquiries():
         if isinstance(d.get("created_at"), str):
             d["created_at"] = datetime.fromisoformat(d["created_at"])
     return docs
+
+
+SCREENSHOT_DIR = ROOT_DIR / "static" / "screenshots"
+SCREENSHOT_DIR.mkdir(parents=True, exist_ok=True)
+PORTFOLIO_SITES = {
+    "nolasoul": "https://nolasoul.co.uk",
+    "lunar-ns": "https://lunar-ns.com",
+}
+
+
+async def refresh_screenshots() -> dict:
+    results = {}
+    for site_id, url in PORTFOLIO_SITES.items():
+        out = SCREENSHOT_DIR / f"{site_id}.png"
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                "google-chrome", "--headless", "--disable-gpu", "--no-sandbox",
+                "--hide-scrollbars", "--window-size=1568,880",
+                f"--screenshot={out}", url,
+                stdout=asyncio.subprocess.DEVNULL, stderr=asyncio.subprocess.DEVNULL,
+            )
+            await asyncio.wait_for(proc.wait(), timeout=90)
+            results[site_id] = "ok" if out.exists() else "failed"
+        except Exception as e:
+            logger.error(f"Screenshot refresh failed for {site_id}: {e}")
+            results[site_id] = "failed"
+    return results
+
+
+async def _screenshot_loop() -> None:
+    while True:
+        await refresh_screenshots()
+        await asyncio.sleep(86400)
+
+
+@app.on_event("startup")
+async def start_screenshot_loop():
+    asyncio.create_task(_screenshot_loop())
+
+
+@api_router.post("/screenshots/refresh")
+async def trigger_screenshot_refresh():
+    return await refresh_screenshots()
+
+
+@api_router.get("/screenshots/{site_id}.png")
+async def get_screenshot(site_id: str):
+    if site_id not in PORTFOLIO_SITES:
+        raise HTTPException(status_code=404, detail="Unknown site")
+    path = SCREENSHOT_DIR / f"{site_id}.png"
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Screenshot not generated yet")
+    return FileResponse(path)
 
 
 app.include_router(api_router)

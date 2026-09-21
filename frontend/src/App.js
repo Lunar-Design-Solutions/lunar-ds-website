@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
+import { getPhaseGold } from "@/utils/moonphase";
 import { Toaster } from "sonner";
 import "@/App.css";
 import { Nav } from "@/components/Nav";
@@ -25,6 +26,10 @@ const ScrollManager = () => {
 };
 
 function App() {
+  useEffect(() => {
+    document.documentElement.style.setProperty("--gold", getPhaseGold());
+  }, []);
+
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.95 });
     const raf = (time) => {

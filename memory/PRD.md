@@ -29,10 +29,21 @@
 - Screenshots: home hero with real moon phase + phase chip, work page with both real client images, case-study modal, enquiry form submit + success toast
 
 ## Backlog
-- P0: Deploy to production on the client's domain
-- P1: Grow portfolio as new client work ships; custom favicon set
+- P0: User deploys via own Claude + GitHub workflow (code handoff done; env vars documented in PRD)
+- P1: Real client testimonials (slot live in case-study modal — set `quote` per project in frontend/src/data/content.js); custom favicon set
 - P2: Admin view for enquiries, CMS-editable portfolio, analytics
 
+## Handoff Notes (for user's own deployment)
+- Backend env: MONGO_URL, DB_NAME, CORS_ORIGINS, EMERGENT_EMAIL_KEY, EMAIL_FROM_NAME, OWNER_EMAIL
+- Frontend env: REACT_APP_BACKEND_URL (build-time)
+- Auto-screenshots require google-chrome in the backend runtime; without it the portfolio silently falls back to bundled images in frontend/public
+- Portfolio screenshots refresh on backend startup, every 24h, and via POST /api/screenshots/refresh
+
+## Implemented (2026-09-21, round 3)
+- Phase-aware gold accent: site-wide --gold CSS var computed from real moon illumination (pale gold at new moon -> warm amber at full); tonight hsl(35 76% 54%) at 77% lit
+- Auto-updating portfolio screenshots: backend captures live sites via headless Chrome on startup + daily + manual POST /api/screenshots/refresh, served at GET /api/screenshots/{site}.png with frontend fallback to bundled images
+- Testimonial slot in every case-study modal ("Client words" — placeholder until real quotes provided)
+
 ## Next Tasks
-1. Deploy to production
-2. Add new client work as it launches
+1. Add real testimonial quotes when clients provide them
+2. Confirm google-chrome exists in the production runtime, or keep fallback images

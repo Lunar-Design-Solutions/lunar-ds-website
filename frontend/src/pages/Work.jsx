@@ -7,7 +7,7 @@ export default function Work() {
       <Reveal>
         <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">Portfolio</p>
         <h1 className="font-display mt-4 max-w-3xl text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-          Work that left the <span className="text-[#D4AF37]">atmosphere</span>.
+          Work that left the <span className="text-[var(--gold)]">atmosphere</span>.
         </h1>
         <p className="mt-6 max-w-xl text-lg font-light leading-relaxed text-[#A39E93]">
           Websites, identities, campaigns and the infrastructure beneath them. Open any case for the metrics and the
