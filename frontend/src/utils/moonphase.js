@@ -20,14 +20,22 @@ export const getMoonPhase = (date = new Date()) => {
   return { phase, illumination, name };
 };
 
-// Gold accent warms from pale gold toward amber as the moon fills
+// Accents follow the lunar cycle: warm amber at full moon, muted stone at new moon
 export const getPhaseGold = (date = new Date()) => {
   const { illumination } = getMoonPhase(date);
   const t = illumination / 100;
   const h = Math.round(46 - 14 * t);
-  const s = Math.round(65 + 14 * t);
-  const l = Math.round(52 + 2 * t);
+  const s = Math.round(20 + 59 * t);
+  const l = Math.round(45 + 9 * t);
   return `hsl(${h} ${s}% ${l}%)`;
+};
+
+export const getPhaseRed = (date = new Date()) => {
+  const { illumination } = getMoonPhase(date);
+  const t = illumination / 100;
+  const s = Math.round(30 + 36 * t);
+  const l = Math.round(40 + 7 * t);
+  return `hsl(3 ${s}% ${l}%)`;
 };
 
 export const getNextFullMoon = (date = new Date()) => {

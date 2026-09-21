@@ -34,7 +34,7 @@ export const Footer = () => {
         </div>
 
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">Navigate</p>
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--red)]">Navigate</p>
           <div className="mt-5 flex flex-col gap-3">
             {[
               { to: "/work", label: "Portfolio" },
@@ -54,13 +54,13 @@ export const Footer = () => {
         </div>
 
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">Connect</p>
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--red)]">Connect</p>
           <a
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             data-testid="footer-instagram-link"
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-sm text-[#F4F1EA] transition-all duration-300 hover:border-[#C8322B] hover:text-[#C8322B]"
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-2.5 text-sm text-[#F4F1EA] transition-all duration-300 hover:border-[var(--red)] hover:text-[var(--red)]"
           >
             <Instagram size={15} /> @lunardesignsolutions
           </a>

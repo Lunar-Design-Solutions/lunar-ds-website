@@ -70,7 +70,7 @@ export const PortfolioGrid = ({ limit }) => {
                 </div>
               </div>
               <div className="p-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#C8322B]">{p.category}</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--red)]">{p.category}</p>
                 <h3 className="font-display mt-2 text-2xl text-[#F4F1EA]">{p.title}</h3>
                 <p className="mt-1 text-sm text-[#A39E93]">{p.subtitle}</p>
               </div>
@@ -104,13 +104,13 @@ export const PortfolioGrid = ({ limit }) => {
                   data-testid="portfolio-modal-close-button"
                   onClick={() => setActive(null)}
                   aria-label="Close case study"
-                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#08080B]/70 text-[#F4F1EA] backdrop-blur transition-colors hover:bg-[#C8322B]"
+                  className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#08080B]/70 text-[#F4F1EA] backdrop-blur transition-colors hover:bg-[var(--red)]"
                 >
                   <X size={18} />
                 </button>
               </div>
               <div className="p-8">
-                <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#C8322B]">{active.category}</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--red)]">{active.category}</p>
                 <h3 className="font-display mt-2 text-4xl">{active.title}</h3>
                 <p className="mt-1 text-[#A39E93]">{active.subtitle}</p>
 

@@ -52,7 +52,7 @@ export default function Enquiry() {
     <main className="mx-auto max-w-6xl px-6 pb-28 pt-40" data-testid="enquiry-page">
       <div className="grid gap-16 lg:grid-cols-5">
         <Reveal className="lg:col-span-2">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">Enquiry</p>
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--red)]">Enquiry</p>
           <h1 className="font-display mt-4 text-4xl leading-[1.08] tracking-tight sm:text-5xl">
             Begin the <span className="text-[var(--gold)]">ascent</span>.
           </h1>
@@ -71,13 +71,13 @@ export default function Enquiry() {
               target="_blank"
               rel="noopener noreferrer"
               data-testid="enquiry-instagram-link"
-              className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#13131A] p-6 transition-all duration-300 hover:border-[#C8322B]/50"
+              className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#13131A] p-6 transition-all duration-300 hover:border-[var(--red)]/50"
             >
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#68645D]">Follow the studio</p>
                 <p className="font-display mt-2 text-xl text-[#F4F1EA]">@lunardesignsolutions</p>
               </div>
-              <Instagram size={22} className="text-[#C8322B]" />
+              <Instagram size={22} className="text-[var(--red)]" />
             </a>
           </div>
         </Reveal>
@@ -94,7 +94,7 @@ export default function Enquiry() {
                   onClick={() => toggleService(s.id)}
                   className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
                     services.includes(s.id)
-                      ? "border-[#C8322B] bg-[#C8322B]/15 text-[#F4F1EA]"
+                      ? "border-[var(--red)] bg-[var(--red)]/15 text-[#F4F1EA]"
                       : "border-white/10 text-[#A39E93] hover:border-white/30"
                   }`}
                 >
@@ -155,7 +155,7 @@ export default function Enquiry() {
               type="submit"
               disabled={sending}
               data-testid="enquiry-submit-button"
-              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#C8322B] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[#08080B] disabled:opacity-60 sm:w-auto"
+              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--red)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[#08080B] disabled:opacity-60 sm:w-auto"
             >
               {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
               {sending ? "Transmitting…" : "Launch Enquiry"}

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
-import { getPhaseGold } from "@/utils/moonphase";
+import { getPhaseGold, getPhaseRed } from "@/utils/moonphase";
 import { Toaster } from "sonner";
 import "@/App.css";
 import { Nav } from "@/components/Nav";
@@ -28,6 +28,7 @@ const ScrollManager = () => {
 function App() {
   useEffect(() => {
     document.documentElement.style.setProperty("--gold", getPhaseGold());
+    document.documentElement.style.setProperty("--red", getPhaseRed());
   }, []);
 
   useEffect(() => {

@@ -45,7 +45,7 @@ export const Nav = () => {
             rel="noopener noreferrer"
             data-testid="instagram-social-link"
             aria-label="Lunar Design on Instagram"
-            className="hidden h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[#A39E93] transition-all duration-300 hover:border-[#C8322B] hover:text-[#C8322B] sm:flex"
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-white/10 text-[#A39E93] transition-all duration-300 hover:border-[var(--red)] hover:text-[var(--red)] sm:flex"
           >
             <Instagram size={15} />
           </a>

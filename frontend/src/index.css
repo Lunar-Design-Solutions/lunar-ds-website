@@ -27,6 +27,7 @@
         --ring: 46 65% 52%;
         --radius: 0.5rem;
         --gold: #D4AF37;
+        --red: #C8322B;
     }
 }
 
@@ -45,7 +46,7 @@
         overflow-x: hidden;
     }
     ::selection {
-        background: #C8322B;
+        background: var(--red);
         color: #F4F1EA;
     }
     ::-webkit-scrollbar {

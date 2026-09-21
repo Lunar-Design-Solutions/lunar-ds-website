@@ -49,6 +49,10 @@
 - Enquiry autoreply: instant branded dark/gold confirmation email to the enquirer (server-side template, reply-to = owner, rate-limited to 3/hour per email to prevent abuse)
 - Footer "next full moon" line (astronomically computed) telling regulars when the gold accent peaks
 
+## Implemented (2026-09-21, round 5)
+- OG share card: branded 1200x630 og-image.png (logo, Marcellus wordmark, gold underline, service caps, orbit ring) + full Open Graph/Twitter meta in index.html. NOTE: og:image URL is absolute and points at the preview domain — update to the production domain at go-live
+- New-moon easter egg: --gold and --red CSS vars now both computed from real illumination; at new moon accents mute to stone (gold hsl(46 20% 45%), red hsl(3 30% 40%)), warming nightly to full-moon peak
+
 ## Next Tasks
 1. Add real testimonial quotes when clients provide them
 2. Confirm google-chrome exists in the production runtime, or keep fallback images

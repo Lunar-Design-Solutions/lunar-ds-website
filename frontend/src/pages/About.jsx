@@ -22,7 +22,7 @@ export default function About() {
   return (
     <main className="mx-auto max-w-6xl px-6 pb-28 pt-40" data-testid="about-page">
       <Reveal>
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">About the Studio</p>
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--red)]">About the Studio</p>
         <h1 className="font-display mt-4 max-w-3xl text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
           A family studio with <span className="text-[var(--gold)]">orbital reach</span>.
         </h1>

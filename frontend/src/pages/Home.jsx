@@ -37,12 +37,12 @@ const Hero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[#C8322B]/40 bg-[#C8322B]/10 px-4 py-1.5"
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[var(--red)]/40 bg-[var(--red)]/10 px-4 py-1.5"
           data-testid="hero-status-pill"
         >
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C8322B] opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#C8322B]" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--red)] opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--red)]" />
           </span>
           <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#F4F1EA]">
             Open for Q3/Q4 commissions
@@ -84,7 +84,7 @@ const Hero = () => {
           <Link
             to="/enquiry"
             data-testid="hero-start-project-button"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-sm font-medium uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:border-[#C8322B] hover:text-[#C8322B]"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-sm font-medium uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:border-[var(--red)] hover:text-[var(--red)]"
           >
             Send Enquiry
           </Link>
@@ -106,7 +106,7 @@ const Hero = () => {
 const Manifesto = () => (
   <section id="manifesto" className="mx-auto max-w-6xl scroll-mt-28 px-6 py-28" data-testid="manifesto-section">
     <Reveal>
-      <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">The Lunar Manifesto</p>
+      <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--red)]">The Lunar Manifesto</p>
       <h2 className="font-display mt-4 max-w-2xl text-3xl tracking-tight sm:text-4xl lg:text-5xl">
         Three laws every project obeys.
       </h2>
@@ -131,7 +131,7 @@ const Services = () => (
   <section id="services" className="mx-auto max-w-6xl scroll-mt-28 px-6 py-28" data-testid="services-section">
     <Reveal className="flex flex-wrap items-end justify-between gap-6">
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">Capabilities</p>
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--red)]">Capabilities</p>
         <h2 className="font-display mt-4 text-3xl tracking-tight sm:text-4xl lg:text-5xl">
           From first sketch to always-on.
         </h2>
@@ -160,12 +160,12 @@ const Services = () => (
         <Link
           to="/enquiry"
           data-testid="services-cta-card"
-          className="group flex h-full min-h-[180px] flex-col justify-between rounded-2xl border border-[#C8322B]/40 bg-[#C8322B]/10 p-8 transition-all duration-500 hover:bg-[#C8322B]/20"
+          className="group flex h-full min-h-[180px] flex-col justify-between rounded-2xl border border-[var(--red)]/40 bg-[var(--red)]/10 p-8 transition-all duration-500 hover:bg-[var(--red)]/20"
         >
-          <p className="font-mono text-[11px] tracking-[0.25em] text-[#C8322B]">06 / YOURS</p>
+          <p className="font-mono text-[11px] tracking-[0.25em] text-[var(--red)]">06 / YOURS</p>
           <div className="flex items-center justify-between">
             <span className="font-display text-xl sm:text-2xl">Commission the next one</span>
-            <ArrowRight size={20} className="text-[#C8322B] transition-transform duration-300 group-hover:translate-x-1.5" />
+            <ArrowRight size={20} className="text-[var(--red)] transition-transform duration-300 group-hover:translate-x-1.5" />
           </div>
         </Link>
       </Reveal>
@@ -177,7 +177,7 @@ const WorkPreview = () => (
   <section className="mx-auto max-w-6xl px-6 py-28" data-testid="work-preview-section">
     <Reveal className="mb-14 flex flex-wrap items-end justify-between gap-6">
       <div>
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#C8322B]">Selected Work</p>
+        <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--red)]">Selected Work</p>
         <h2 className="font-display mt-4 text-3xl tracking-tight sm:text-4xl lg:text-5xl">Recent orbits.</h2>
       </div>
       <Link
@@ -198,12 +198,12 @@ const CTABand = () => (
     <Reveal>
       <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--gold)]">The next phase</p>
       <h2 className="font-display mx-auto mt-6 max-w-3xl text-4xl leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-        Your brand deserves a <span className="text-[#C8322B]">gravitational pull</span>.
+        Your brand deserves a <span className="text-[var(--red)]">gravitational pull</span>.
       </h2>
       <Link
         to="/enquiry"
         data-testid="cta-band-button"
-        className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#C8322B] px-9 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[#08080B]"
+        className="mt-10 inline-flex items-center gap-2 rounded-full bg-[var(--red)] px-9 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[#F4F1EA] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[#08080B]"
       >
         Start a Project <ArrowRight size={16} />
       </Link>
