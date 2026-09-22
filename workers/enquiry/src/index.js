@@ -3,8 +3,9 @@
 // and emails it to the studio inboxes via the Email Routing send_email binding.
 // Reply-To is set to the visitor, so hitting "Reply" in Gmail answers them directly.
 
-const LIMITS = { name: 120, email: 254, budget: 120, message: 4000, service: 60, services: 10 };
+const LIMITS = { name: 120, email: 254, phone: 40, budget: 120, message: 4000, service: 60, services: 10 };
 const EMAIL_RE = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
+const PHONE_RE = /^\+?[\d\s().-]{7,25}$/;
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -21,6 +22,7 @@ function validate(data) {
   const enquiry = {
     name: clean(data.name, LIMITS.name),
     email: clean(data.email, LIMITS.email),
+    phone: clean(data.phone, LIMITS.phone),
     budget: clean(data.budget, LIMITS.budget),
     message: clean(data.message, LIMITS.message),
     services: Array.isArray(data.services)
@@ -29,6 +31,7 @@ function validate(data) {
   };
   if (!enquiry.name) return { error: "Please tell us your name." };
   if (!EMAIL_RE.test(enquiry.email)) return { error: "Please enter a valid email address." };
+  if (enquiry.phone && !PHONE_RE.test(enquiry.phone)) return { error: "Please enter a valid mobile number." };
   if (!enquiry.message) return { error: "Please include a short project brief." };
   return { enquiry };
 }
@@ -40,6 +43,7 @@ function renderHtml(e, fromName) {
   const rows = [
     row("Name", esc(e.name)),
     row("Email", `<a href="mailto:${esc(e.email)}">${esc(e.email)}</a>`),
+    row("Mobile", e.phone ? `<a href="tel:${esc(e.phone.replace(/[^\d+]/g, ""))}">${esc(e.phone)}</a>` : "Not given"),
     row("Services", esc(e.services.join(", ") || "Not specified")),
     row("Budget", esc(e.budget || "Not specified")),
     row("Brief", esc(e.message)),
@@ -59,6 +63,7 @@ function renderText(e) {
     "",
     `Name:     ${e.name}`,
     `Email:    ${e.email}`,
+    `Mobile:   ${e.phone || "Not given"}`,
     `Services: ${e.services.join(", ") || "Not specified"}`,
     `Budget:   ${e.budget || "Not specified"}`,
     "",
