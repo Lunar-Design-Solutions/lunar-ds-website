@@ -5,7 +5,8 @@ import { Instagram, Send, Loader2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { INSTAGRAM_URL } from "@/data/content";
 
-const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+// Same-origin Cloudflare Pages Function (frontend/functions/api/enquiries.js).
+const API = "/api";
 
 const SERVICE_OPTIONS = [
   { id: "Web Design & Build", testid: "enquiry-select-service-website" },
@@ -15,12 +16,11 @@ const SERVICE_OPTIONS = [
   { id: "Hosting & Care", testid: "enquiry-select-service-hosting" },
 ];
 
-const BUDGETS = ["Under $2k", "$2k – $5k", "$5k – $12k", "$12k+"];
+const EMPTY_FORM = { name: "", email: "", budget: "", message: "", company: "" };
 
 export default function Enquiry() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState(EMPTY_FORM);
   const [services, setServices] = useState([]);
-  const [budget, setBudget] = useState(null);
   const [sending, setSending] = useState(false);
 
   const toggleService = (id) =>
@@ -31,15 +31,14 @@ export default function Enquiry() {
     if (sending) return;
     setSending(true);
     try {
-      await axios.post(`${API}/enquiries`, { ...form, services, budget });
+      await axios.post(`${API}/enquiries`, { ...form, services });
       toast.success("Enquiry received. We'll be in touch within one orbit — 24 hours.", {
         duration: 5000,
       });
-      setForm({ name: "", email: "", message: "" });
+      setForm(EMPTY_FORM);
       setServices([]);
-      setBudget(null);
     } catch (err) {
-      toast.error("Transmission failed. Please try again.");
+      toast.error(err?.response?.data?.detail || "Transmission failed. Please try again.");
     } finally {
       setSending(false);
     }
@@ -103,24 +102,21 @@ export default function Enquiry() {
               ))}
             </div>
 
-            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--gold)]">Budget range</p>
-            <div className="mt-4 flex flex-wrap gap-2.5">
-              {BUDGETS.map((b) => (
-                <button
-                  type="button"
-                  key={b}
-                  data-testid={`enquiry-budget-${b.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                  onClick={() => setBudget(budget === b ? null : b)}
-                  className={`rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 ${
-                    budget === b
-                      ? "border-[var(--gold)] bg-[color-mix(in_srgb,var(--gold)_15%,transparent)] text-[var(--gold)]"
-                      : "border-white/10 text-[#A39E93] hover:border-white/30"
-                  }`}
-                >
-                  {b}
-                </button>
-              ))}
-            </div>
+            <label
+              htmlFor="enquiry-budget"
+              className="mt-8 block font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--gold)]"
+            >
+              What's your budget?
+            </label>
+            <input
+              id="enquiry-budget"
+              data-testid="enquiry-input-budget"
+              placeholder="e.g. £1,500 — or roughly what you had in mind"
+              maxLength={120}
+              value={form.budget}
+              onChange={(e) => setForm({ ...form, budget: e.target.value })}
+              className={`${inputCls} mt-4`}
+            />
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <input
@@ -149,6 +145,18 @@ export default function Enquiry() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className={`${inputCls} mt-4 resize-none`}
+            />
+
+            {/* Spam honeypot: hidden from people, often filled in by bots. */}
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={form.company}
+              onChange={(e) => setForm({ ...form, company: e.target.value })}
+              className="hidden"
             />
 
             <button
