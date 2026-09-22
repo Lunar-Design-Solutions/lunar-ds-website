@@ -16,7 +16,7 @@ const SERVICE_OPTIONS = [
   { id: "Hosting & Care", testid: "enquiry-select-service-hosting" },
 ];
 
-const EMPTY_FORM = { name: "", email: "", budget: "", message: "", company: "" };
+const EMPTY_FORM = { name: "", email: "", phone: "", budget: "", message: "", company: "" };
 
 export default function Enquiry() {
   const [form, setForm] = useState(EMPTY_FORM);
@@ -111,7 +111,7 @@ export default function Enquiry() {
             <input
               id="enquiry-budget"
               data-testid="enquiry-input-budget"
-              placeholder="e.g. £1,500 — or roughly what you had in mind"
+              placeholder="Roughly what you had in mind"
               maxLength={120}
               value={form.budget}
               onChange={(e) => setForm({ ...form, budget: e.target.value })}
@@ -137,6 +137,17 @@ export default function Enquiry() {
                 className={inputCls}
               />
             </div>
+            <input
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              data-testid="enquiry-input-phone"
+              placeholder="Mobile number (optional)"
+              maxLength={40}
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              className={`${inputCls} mt-4`}
+            />
             <textarea
               required
               rows={5}
