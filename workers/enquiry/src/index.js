@@ -96,7 +96,7 @@ export default {
       });
     } catch (err) {
       console.error("Enquiry email failed", err?.code, err?.message);
-      return json({ detail: "We couldn't send your enquiry just now. Please try again." }, 502);
+      return json({ detail: "We couldn't send your enquiry just now. Please try again." }, 500);
     }
 
     console.log("Enquiry sent", { services: enquiry.services, hasBudget: Boolean(enquiry.budget) });
