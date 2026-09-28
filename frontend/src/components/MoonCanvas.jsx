@@ -1,7 +1,43 @@
-import { useEffect, useRef } from "react";
-import { getMoonPhase, isEclipseNight } from "@/utils/moonphase";
+import { useEffect, useRef, useState } from "react";
+import { createLunarScene } from "@/components/lunarScene";
+import { getMoonPhase, getPhaseGold, getPhaseRed, isEclipseNight } from "@/utils/moonphase";
 
-export const MoonCanvas = ({ className = "" }) => {
+// Hero moon: WebGL scene (lunarScene.js) lit to tonight's real phase.
+// Falls back to the original 2D canvas moon when WebGL isn't available.
+export const MoonCanvas = ({ className = "", scrollProgress, interactionRef }) => {
+  const canvasRef = useRef(null);
+  const [fallback, setFallback] = useState(false);
+
+  useEffect(() => {
+    if (fallback || !canvasRef.current) return undefined;
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    const scene = createLunarScene(canvasRef.current, {
+      phase: getMoonPhase().phase,
+      eclipse: isEclipseNight(),
+      gold: getPhaseGold(),
+      red: getPhaseRed(),
+      reducedMotion,
+      interactionTarget: interactionRef?.current,
+    });
+    if (!scene) {
+      setFallback(true);
+      return undefined;
+    }
+    scene.setScroll(scrollProgress?.get?.() ?? 0);
+    const unsubscribe = scrollProgress?.on?.("change", (v) => scene.setScroll(v));
+    return () => {
+      unsubscribe?.();
+      scene.destroy();
+    };
+  }, [fallback, scrollProgress, interactionRef]);
+
+  if (fallback) return <MoonCanvas2D className={className} />;
+  return (
+    <canvas ref={canvasRef} aria-hidden="true" className={`block h-full w-full ${className}`} data-testid="hero-moon-canvas" />
+  );
+};
+
+const MoonCanvas2D = ({ className = "" }) => {
   const canvasRef = useRef(null);
   const mouse = useRef({ x: 0, y: 0 });
 
@@ -37,13 +73,13 @@ export const MoonCanvas = ({ className = "" }) => {
       t += 1;
       const W = canvas.width;
       const H = canvas.height;
-      const cx = W / 2 + mouse.current.x * 18 * devicePixelRatio;
-      const cy = H / 2 + mouse.current.y * 18 * devicePixelRatio;
-      const R = Math.min(W, H) * 0.3;
+      const wide = W / devicePixelRatio >= 1024;
+      const cx = W * (wide ? 0.72 : 0.8) + mouse.current.x * 18 * devicePixelRatio;
+      const cy = H * (wide ? 0.4 : 0.18) + mouse.current.y * 18 * devicePixelRatio;
+      const R = Math.min(W, H) * (wide ? 0.17 : 0.12);
 
       ctx.clearRect(0, 0, W, H);
 
-      // ambient glow
       const glow = ctx.createRadialGradient(cx, cy, R * 0.4, cx, cy, R * 2.4);
       glow.addColorStop(0, "rgba(212,175,55,0.10)");
       glow.addColorStop(0.5, "rgba(200,50,43,0.05)");
@@ -51,7 +87,6 @@ export const MoonCanvas = ({ className = "" }) => {
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, W, H);
 
-      // gold orbit ring
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(-0.35 + Math.sin(t * 0.004) * 0.05 + mouse.current.x * 0.06);
@@ -62,18 +97,15 @@ export const MoonCanvas = ({ className = "" }) => {
       ctx.stroke();
       ctx.restore();
 
-      // moon rendered to match tonight's real lunar phase
       const p = getMoonPhase().phase;
       const term = Math.cos(2 * Math.PI * p);
       const eclipse = isEclipseNight();
 
-      // dark side (faint earthshine; rusted on eclipse nights)
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
       ctx.fillStyle = eclipse ? "#1f0f10" : "#16161d";
       ctx.fill();
 
-      // lit region: limb semicircle closed by the terminator ellipse
       ctx.save();
       ctx.beginPath();
       if (p < 0.5) {
@@ -108,14 +140,12 @@ export const MoonCanvas = ({ className = "" }) => {
       }
       ctx.restore();
 
-      // limb outline
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
       ctx.strokeStyle = "rgba(212,175,55,0.25)";
       ctx.lineWidth = devicePixelRatio;
       ctx.stroke();
 
-      // crimson pulse
       const pulse = (t % 240) / 240;
       ctx.beginPath();
       ctx.arc(cx, cy, R * (1 + pulse * 0.35), 0, Math.PI * 2);
@@ -123,14 +153,13 @@ export const MoonCanvas = ({ className = "" }) => {
       ctx.lineWidth = 1.5 * devicePixelRatio;
       ctx.stroke();
 
-      // particles
-      particles.forEach((p) => {
-        p.a += p.s;
-        const px = cx + Math.cos(p.a) * R * p.r * 1.6;
-        const py = cy + Math.sin(p.a) * R * p.r * 0.9 + Math.sin(t * 0.01 + p.a) * 6;
+      particles.forEach((pt) => {
+        pt.a += pt.s;
+        const px = cx + Math.cos(pt.a) * R * pt.r * 1.6;
+        const py = cy + Math.sin(pt.a) * R * pt.r * 0.9 + Math.sin(t * 0.01 + pt.a) * 6;
         ctx.beginPath();
-        ctx.arc(px, py, p.size * devicePixelRatio, 0, Math.PI * 2);
-        ctx.fillStyle = p.gold ? "rgba(212,175,55,0.7)" : "rgba(200,50,43,0.6)";
+        ctx.arc(px, py, pt.size * devicePixelRatio, 0, Math.PI * 2);
+        ctx.fillStyle = pt.gold ? "rgba(212,175,55,0.7)" : "rgba(200,50,43,0.6)";
         ctx.fill();
       });
 
@@ -145,5 +174,5 @@ export const MoonCanvas = ({ className = "" }) => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className={`h-full w-full ${className}`} data-testid="hero-moon-canvas" />;
+  return <canvas ref={canvasRef} aria-hidden="true" className={`h-full w-full ${className}`} data-testid="hero-moon-canvas" />;
 };
