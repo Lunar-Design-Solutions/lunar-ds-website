@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import { PORTFOLIO } from "@/data/content";
 import { EASE, Reveal } from "@/components/Reveal";
@@ -12,6 +12,34 @@ const shotFallback = (p) => (e) => {
   if (e.currentTarget.dataset.fb) return;
   e.currentTarget.dataset.fb = "1";
   e.currentTarget.src = p.image;
+};
+
+// Vertical showcase reel shown in a phone frame inside the case study.
+// Muted + playsInline so it autoplays on iOS; paused with controls when the visitor prefers reduced motion.
+const Reel = ({ src, poster, title }) => {
+  const reduceMotion = useReducedMotion();
+  return (
+    <div className="mx-auto w-full max-w-[220px]" data-testid="portfolio-modal-reel">
+      <div className="overflow-hidden rounded-[30px] border border-white/15 bg-[#08080B] p-1.5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]">
+        <video
+          ref={(el) => {
+            if (el) el.muted = true;
+          }}
+          src={src}
+          poster={poster}
+          autoPlay={!reduceMotion}
+          controls={reduceMotion}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={`${title} showcase reel`}
+          className="aspect-[9/16] w-full rounded-[24px] bg-[#08080B] object-cover"
+        />
+      </div>
+      <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#68645D]">Showcase reel</p>
+    </div>
+  );
 };
 
 export const PortfolioGrid = ({ limit }) => {
@@ -96,7 +124,7 @@ export const PortfolioGrid = ({ limit }) => {
               exit={{ y: 80, opacity: 0 }}
               transition={{ duration: 0.5, ease: EASE }}
               onClick={(e) => e.stopPropagation()}
-              className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-t-3xl border border-white/10 bg-[#0E0E14] sm:rounded-3xl"
+              className={`max-h-[90vh] w-full ${active.reel ? "max-w-4xl" : "max-w-3xl"} overflow-y-auto rounded-t-3xl border border-white/10 bg-[#0E0E14] sm:rounded-3xl`}
               data-testid="portfolio-modal"
             >
               <div className="relative">
@@ -110,7 +138,9 @@ export const PortfolioGrid = ({ limit }) => {
                   <X size={18} />
                 </button>
               </div>
-              <div className="p-8">
+              <div className={active.reel ? "grid gap-8 p-8 sm:grid-cols-[220px_minmax(0,1fr)] sm:items-start" : "p-8"}>
+                {active.reel && <Reel src={active.reel} poster={active.reelPoster} title={active.title} />}
+                <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--red)]">{active.category}</p>
                 <h3 className="font-display mt-2 text-4xl">{active.title}</h3>
                 <p className="mt-1 text-[#A39E93]">{active.subtitle}</p>
@@ -153,6 +183,7 @@ export const PortfolioGrid = ({ limit }) => {
                     Visit live site <ArrowUpRight size={14} />
                   </a>
                 )}
+                </div>
               </div>
             </motion.div>
           </motion.div>
