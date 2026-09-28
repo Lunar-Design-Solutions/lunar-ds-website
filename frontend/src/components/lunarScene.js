@@ -80,7 +80,7 @@ void main() {
   vec2 c1 = craters(s, 2.4, 0.22, 0.5);
   vec2 c2 = craters(s, 5.5, 0.26, 0.3);
   vec2 c3 = craters(s, 13.0, 0.3, 0.16);
-  vec2 c4 = craters(s, 30.0, 0.34, 0.06);
+  vec2 c4 = craters(s, 30.0, 0.34, 0.035);
   float m = 1.0 - 0.7 * maria;
   h += c1.x + c2.x * m + c3.x * m + c4.x * m;
   alb += c1.y + c2.y + c3.y * 0.6;
@@ -185,7 +185,7 @@ void main() {
   vec2 sp = p + vec2(0.0, uScroll * 0.06);
   float st = starLayer(sp + uMouse * 0.004, 34.0, 1.0)
            + starLayer(sp + uMouse * 0.009, 62.0, 7.0) * 0.8
-           + starLayer(sp + uMouse * 0.016, 118.0, 13.0) * 0.6;
+           + starLayer(sp + uMouse * 0.016, 118.0, 13.0) * 0.35;
   float starMask = sky * smoothstep(0.0, 0.04, aboveH) * uIntro.x * (0.18 + 0.82 * lf) * smoothstep(1.0, 1.35, md);
   col += vec3(0.95, 0.92, 0.86) * st * starMask;
 
@@ -527,7 +527,7 @@ export function createLunarScene(canvas, opts) {
     state.w = Math.max(1, rect.width);
     state.h = Math.max(1, rect.height);
     // Cap the pixel count so large or high-DPI screens stay smooth.
-    const budget = Math.sqrt(3.2e6 / (state.w * state.h));
+    const budget = Math.sqrt(4.2e6 / (state.w * state.h));
     state.dpr = Math.min(window.devicePixelRatio || 1, 1.75, budget) * state.scale;
     canvas.width = Math.round(state.w * state.dpr);
     canvas.height = Math.round(state.h * state.dpr);
@@ -615,22 +615,22 @@ export function createLunarScene(canvas, opts) {
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
 
-  // Drop resolution on slow devices, keeping it sharp where the GPU can take it.
+  // Only drop resolution on genuinely slow devices: judge after the intro has settled, ignore
+  // hitches (tab switches, GC), tolerate 30 Hz displays, and never go below 75% sharpness.
   const adapt = (now) => {
-    if (state.lastFrame) {
-      state.frameAcc += now - state.lastFrame;
-      state.frames += 1;
-      if (state.frames === 45) {
-        const avg = state.frameAcc / state.frames;
-        if (avg > 24 && state.scale > 0.55) {
-          state.scale *= 0.8;
-          resize();
-        }
-        state.frames = 0;
-        state.frameAcc = 0;
-      }
-    }
+    const dt = state.lastFrame ? now - state.lastFrame : 0;
     state.lastFrame = now;
+    if (!dt || dt > 100 || now - state.start < 5000) return;
+    state.frameAcc += dt;
+    state.frames += 1;
+    if (state.frames < 90) return;
+    const avg = state.frameAcc / state.frames;
+    state.frames = 0;
+    state.frameAcc = 0;
+    if (avg > 38 && state.scale > 0.8) {
+      state.scale = Math.max(0.75, state.scale * 0.85);
+      resize();
+    }
   };
 
   const loop = (now) => {
