@@ -6,6 +6,8 @@ export const PORTFOLIO = [
     category: "Websites",
     image: "/work-nolasoul.jpg",
     link: "https://nolasoul.co.uk",
+    reel: "/nolasoul-reel.mp4",
+    reelPoster: "/nolasoul-reel-poster.jpg",
     metrics: ["Live Site", "One-Page Build", "Full Menu System"],
     stack: ["Web Design & Build", "Domain & DNS", "Hosting & Care"],
     blurb:
