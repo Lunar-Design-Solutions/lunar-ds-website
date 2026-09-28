@@ -12,18 +12,22 @@ import { getMoonPhase, isEclipseNight } from "@/utils/moonphase";
 const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const moonY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   return (
     <section ref={ref} className="relative flex min-h-screen items-center overflow-hidden pt-28" data-testid="hero-section">
-      <motion.div style={{ y: moonY }} className="absolute inset-y-0 right-0 hidden w-1/2 lg:block">
-        <MoonCanvas />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/10 bg-[#08080B]/70 px-4 py-2 backdrop-blur"
+      {/* Full-bleed WebGL scene: tonight's moon rising over the logo's wave lines. Sets into the sea on scroll. */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <MoonCanvas scrollProgress={scrollYProgress} interactionRef={ref} />
+      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.6, duration: 1 }}
+        className="pointer-events-none absolute bottom-10 left-[72%] z-10 hidden -translate-x-1/2 lg:block"
+      >
+        <div
+          className="whitespace-nowrap rounded-full border border-white/10 bg-[#08080B]/70 px-4 py-2 backdrop-blur"
           data-testid="hero-moon-phase"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#A39E93]">
@@ -34,8 +38,9 @@ const Hero = () => {
               <span className="text-[var(--gold)]">{getMoonPhase().name}</span>
             )}{" "}
             · {getMoonPhase().illumination}% lit
+            <span className="text-[#68645D]"> · Tap the moon</span>
           </span>
-        </motion.div>
+        </div>
       </motion.div>
 
       <motion.div style={{ y: textY }} className="relative z-10 mx-auto w-full max-w-6xl px-6">
