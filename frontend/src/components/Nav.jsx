@@ -19,7 +19,7 @@ export const Nav = () => {
     <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
       <nav className="flex w-full max-w-5xl items-center justify-between rounded-full border border-white/10 bg-[#08080B]/80 px-5 py-3 backdrop-blur-xl">
         <Link to="/" data-testid="header-logo" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <img src="/logo.png" alt="Lunar Design" className="h-9 w-9 rounded-lg" />
+          <img src="/logo.png" alt="Lunar Design" className="h-9 w-9" />
           <span className="font-display hidden text-lg tracking-wide sm:block">Lunar Design</span>
         </Link>
 
