@@ -24,7 +24,7 @@ export const Footer = () => {
       <div className="relative mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-3">
         <div>
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Lunar Design" className="h-10 w-10 rounded-lg" />
+            <img src="/logo.png" alt="Lunar Design" className="h-10 w-10" />
             <span className="font-display text-xl">Lunar Design</span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#A39E93]">
