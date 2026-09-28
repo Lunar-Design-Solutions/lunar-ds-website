@@ -6,7 +6,8 @@ import { EASE, Reveal } from "@/components/Reveal";
 
 const CATEGORIES = ["all", ...new Set(PORTFOLIO.map((p) => p.category))];
 
-const shotSrc = (p) => `${process.env.REACT_APP_BACKEND_URL}/api/screenshots/${p.id}.png`;
+// Daily screenshot of the live site from the lunar-ds-screenshots Worker; falls back to the bundled image.
+const shotSrc = (p) => `/api/screenshots/${p.id}.jpg`;
 const shotFallback = (p) => (e) => {
   if (e.currentTarget.dataset.fb) return;
   e.currentTarget.dataset.fb = "1";
