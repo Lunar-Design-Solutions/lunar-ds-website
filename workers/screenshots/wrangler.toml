@@ -1,0 +1,27 @@
+# Lunar Design portfolio screenshots Worker
+# Takes a fresh screenshot of each portfolio site once a day with Cloudflare Browser Run
+# and stores it in KV. The website reads them via the Pages "SCREENSHOTS" service binding
+# at /api/screenshots/<id>.jpg (falls back to the bundled images if unavailable).
+# Deployed by Cloudflare Workers Builds from this folder (root: workers/screenshots).
+
+name = "lunar-ds-screenshots"
+main = "index.js"
+compatibility_date = "2026-09-25"
+
+# Not publicly reachable - only the Pages site calls it, through the service binding.
+workers_dev = false
+preview_urls = false
+
+[browser]
+binding = "BROWSER"
+
+[[kv_namespaces]]
+binding = "SHOTS"
+id = "e221d1c2386546fa987d30c2fc944b79"
+
+# Refresh every morning (UTC).
+[triggers]
+crons = ["30 5 * * *"]
+
+[observability]
+enabled = true
