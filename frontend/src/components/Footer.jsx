@@ -50,6 +50,13 @@ export const Footer = () => {
                 {l.label}
               </Link>
             ))}
+              <a
+                href="/privacy"
+                data-testid="footer-link-privacy"
+                className="text-sm text-[#A39E93] transition-colors duration-300 hover:text-[var(--gold)]"
+              >
+                Privacy Notice
+              </a>
           </div>
         </div>
 
