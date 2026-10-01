@@ -5,6 +5,7 @@
 const SITES = {
   nolasoul: "https://nolasoul.co.uk",
   "lunar-ns": "https://lunar-ns.com",
+  subrosa: "https://subrosapizza.com",
 };
 const MAX_AGE_MS = 24 * 60 * 60 * 1000; // refresh stale shots in the background after a day
 
