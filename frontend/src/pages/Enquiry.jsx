@@ -74,7 +74,7 @@ export default function Enquiry() {
             >
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#68645D]">Follow the studio</p>
-                <p className="font-display mt-2 text-xl text-[#F4F1EA]">@lunardesignsolutions</p>
+                <p className="font-display mt-2 text-xl text-[#F4F1EA]">lunardesignsolutions</p>
               </div>
               <Instagram size={22} className="text-[var(--red)]" />
             </a>
