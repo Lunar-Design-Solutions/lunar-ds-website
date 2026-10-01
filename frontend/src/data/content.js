@@ -12,7 +12,18 @@ export const PORTFOLIO = [
     stack: ["Web Design & Build", "Domain & DNS", "Hosting & Care"],
     blurb:
       "A dark, appetite-first one-pager for a Glasgow soul food kitchen — fried chicken, po' boys and beignets with the full menu, opening hours and location woven into a single cinematic scroll. Client's own logo; we handle the site, domain and hosting.",
-    span: "wide",
+  },
+  {
+    id: "subrosa",
+    title: "Sub Rosa Pizza",
+    subtitle: "New York & Detroit Pizza — Glasgow Southside",
+    category: "Websites",
+    image: "/og-image.png",
+    link: "https://subrosapizza.com",
+    metrics: ["Live Site", "Two Locations", "Instagram Gallery"],
+    stack: ["Web Design & Build", "Domain & DNS", "Hosting & Care"],
+    blurb:
+      "A bold red-and-black one-pager for a hidden-gem pizzeria in Castlemilk and Shawlands — 16-inch New York pies and Detroit pan slices, a kitchen gallery from Instagram, press quotes, and both locations with hours, directions and one-tap ordering and table booking. Domain and hosting managed by us.",
   },
   {
     id: "lunar-ns",
@@ -25,7 +36,6 @@ export const PORTFOLIO = [
     stack: ["Web Design & Build", "Domain & DNS", "Hosting & Care"],
     blurb:
       "A warm, editorial site for a network engineer bringing enterprise-grade credentials — Cisco CCNP, UniFi, Palo Alto — to small businesses. Services, process and consultation booking in one clear journey, with domain and hosting managed by us.",
-    span: "tall",
   },
 ];
 
