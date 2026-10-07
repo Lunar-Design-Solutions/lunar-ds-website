@@ -3,31 +3,53 @@ import { createLunarScene } from "@/components/lunarScene";
 import { getMoonPhase, getPhaseGold, getPhaseRed, isEclipseNight } from "@/utils/moonphase";
 
 // Hero moon: WebGL scene (lunarScene.js) lit to tonight's real phase.
-// Falls back to the original 2D canvas moon when WebGL isn't available.
+// Falls back to a still 2D moon when WebGL isn't available or there's no real GPU.
 export const MoonCanvas = ({ className = "", scrollProgress, interactionRef }) => {
   const canvasRef = useRef(null);
   const [fallback, setFallback] = useState(false);
 
   useEffect(() => {
     if (fallback || !canvasRef.current) return undefined;
-    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    const scene = createLunarScene(canvasRef.current, {
-      phase: getMoonPhase().phase,
-      eclipse: isEclipseNight(),
-      gold: getPhaseGold(),
-      red: getPhaseRed(),
-      reducedMotion,
-      interactionTarget: interactionRef?.current,
-    });
-    if (!scene) {
-      setFallback(true);
-      return undefined;
-    }
-    scene.setScroll(scrollProgress?.get?.() ?? 0);
-    const unsubscribe = scrollProgress?.on?.("change", (v) => scene.setScroll(v));
+    let scene = null;
+    let unsubscribe;
+    let cancelled = false;
+    let idleId;
+    let timer;
+
+    const start = () => {
+      if (cancelled || !canvasRef.current) return;
+      const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+      scene = createLunarScene(canvasRef.current, {
+        phase: getMoonPhase().phase,
+        eclipse: isEclipseNight(),
+        gold: getPhaseGold(),
+        red: getPhaseRed(),
+        reducedMotion,
+        interactionTarget: interactionRef?.current,
+      });
+      if (!scene) {
+        setFallback(true);
+        return;
+      }
+      scene.setScroll(scrollProgress?.get?.() ?? 0);
+      unsubscribe = scrollProgress?.on?.("change", (v) => scene.setScroll(v));
+    };
+
+    // Let the page paint and become usable before the scene compiles its shaders.
+    const schedule = () => {
+      if ("requestIdleCallback" in window) idleId = window.requestIdleCallback(start, { timeout: 1500 });
+      else timer = setTimeout(start, 200);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+
     return () => {
+      cancelled = true;
+      window.removeEventListener("load", schedule);
+      if (idleId && "cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
+      clearTimeout(timer);
       unsubscribe?.();
-      scene.destroy();
+      scene?.destroy();
     };
   }, [fallback, scrollProgress, interactionRef]);
 
@@ -37,15 +59,14 @@ export const MoonCanvas = ({ className = "", scrollProgress, interactionRef }) =
   );
 };
 
+// Drawn once (and on resize) rather than animated, so it costs nothing on low-power devices.
 const MoonCanvas2D = ({ className = "" }) => {
   const canvasRef = useRef(null);
-  const mouse = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    let raf;
-    let t = 0;
+    const t = 60;
 
     const particles = Array.from({ length: 60 }, () => ({
       a: Math.random() * Math.PI * 2,
@@ -61,21 +82,13 @@ const MoonCanvas2D = ({ className = "" }) => {
       canvas.height = clientHeight * devicePixelRatio;
     };
     resize();
-    window.addEventListener("resize", resize);
-
-    const onMove = (e) => {
-      mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
-      mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
-    };
-    window.addEventListener("mousemove", onMove);
 
     const draw = () => {
-      t += 1;
       const W = canvas.width;
       const H = canvas.height;
       const wide = W / devicePixelRatio >= 1024;
-      const cx = W * (wide ? 0.72 : 0.8) + mouse.current.x * 18 * devicePixelRatio;
-      const cy = H * (wide ? 0.4 : 0.18) + mouse.current.y * 18 * devicePixelRatio;
+      const cx = W * (wide ? 0.72 : 0.8);
+      const cy = H * (wide ? 0.4 : 0.18);
       const R = Math.min(W, H) * (wide ? 0.17 : 0.12);
 
       ctx.clearRect(0, 0, W, H);
@@ -89,7 +102,7 @@ const MoonCanvas2D = ({ className = "" }) => {
 
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.rotate(-0.35 + Math.sin(t * 0.004) * 0.05 + mouse.current.x * 0.06);
+      ctx.rotate(-0.35 + Math.sin(t * 0.004) * 0.05);
       ctx.beginPath();
       ctx.ellipse(0, 0, R * 1.45, R * 0.42, 0, 0, Math.PI * 2);
       ctx.strokeStyle = "rgba(212,175,55,0.4)";
@@ -154,7 +167,6 @@ const MoonCanvas2D = ({ className = "" }) => {
       ctx.stroke();
 
       particles.forEach((pt) => {
-        pt.a += pt.s;
         const px = cx + Math.cos(pt.a) * R * pt.r * 1.6;
         const py = cy + Math.sin(pt.a) * R * pt.r * 0.9 + Math.sin(t * 0.01 + pt.a) * 6;
         ctx.beginPath();
@@ -162,16 +174,15 @@ const MoonCanvas2D = ({ className = "" }) => {
         ctx.fillStyle = pt.gold ? "rgba(212,175,55,0.7)" : "rgba(200,50,43,0.6)";
         ctx.fill();
       });
-
-      raf = requestAnimationFrame(draw);
     };
     draw();
 
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", onMove);
+    const onResize = () => {
+      resize();
+      draw();
     };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   return <canvas ref={canvasRef} aria-hidden="true" className={`h-full w-full ${className}`} data-testid="hero-moon-canvas" />;
