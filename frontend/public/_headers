@@ -2,11 +2,12 @@
 
 # Browser security protections for every page (audit item A4).
 # The Content-Security-Policy is report-only for now: it logs problems in the browser console
-# but blocks nothing. The sha256 hash allows the toast library's built-in <style> tag; if a
-# sonner upgrade changes that CSS, update the hash from the console message.
+# but blocks nothing. The first sha256 hash allows the toast library's built-in <style> tag (if a
+# sonner upgrade changes that CSS, update the hash from the console message); the second allows
+# empty <style> tags that a library fills in through the CSSOM.
 /*
   Strict-Transport-Security: max-age=31536000
-  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'sha256-7lAG9nNPimWNBky6j9qnn0jfFzu5wK96KOj/UzoG0hg='; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; media-src 'self'; object-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'sha256-7lAG9nNPimWNBky6j9qnn0jfFzu5wK96KOj/UzoG0hg=' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; media-src 'self'; object-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: camera=(), microphone=(), geolocation=()
 
