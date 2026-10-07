@@ -422,6 +422,16 @@ function program(gl, frag) {
   return p;
 }
 
+function isSoftwareRenderer(gl) {
+  try {
+    const ext = gl.getExtension("WEBGL_debug_renderer_info");
+    const name = String(gl.getParameter(ext ? ext.UNMASKED_RENDERER_WEBGL : gl.RENDERER) || "");
+    return /swiftshader|llvmpipe|softpipe|software|basic render/i.test(name);
+  } catch {
+    return false;
+  }
+}
+
 // Layout in scene units (1 = canvas height, origin at the centre, y up).
 function layoutFor(w, h) {
   const aspect = w / h;
@@ -457,8 +467,15 @@ export function createLunarScene(canvas, opts) {
     stencil: false,
     powerPreference: "high-performance",
     preserveDrawingBuffer: false,
+    failIfMajorPerformanceCaveat: true,
   });
   if (!gl) return null;
+  // Without a real GPU (software rendering) every frame would tie up the CPU for a second or
+  // more, so hand over to the lightweight still moon instead.
+  if (isSoftwareRenderer(gl)) {
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return null;
+  }
 
   let bake, scene;
   try {
