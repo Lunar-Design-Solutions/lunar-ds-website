@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { getPhaseGold, getPhaseRed } from "@/utils/moonphase";
@@ -7,9 +7,14 @@ import "@/App.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import Home from "@/pages/Home";
-import Work from "@/pages/Work";
-import About from "@/pages/About";
-import Enquiry from "@/pages/Enquiry";
+
+// Other pages load as separate files so the home page downloads less up front.
+const loadWork = () => import("@/pages/Work");
+const loadAbout = () => import("@/pages/About");
+const loadEnquiry = () => import("@/pages/Enquiry");
+const Work = lazy(loadWork);
+const About = lazy(loadAbout);
+const Enquiry = lazy(loadEnquiry);
 
 const ScrollManager = () => {
   const { pathname, hash } = useLocation();
@@ -31,6 +36,22 @@ function App() {
     document.documentElement.style.setProperty("--red", getPhaseRed());
   }, []);
 
+  // Fetch the other pages in the background once the first page has settled, so moving
+  // between pages stays instant.
+  useEffect(() => {
+    const prefetch = () => {
+      loadWork();
+      loadAbout();
+      loadEnquiry();
+    };
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(prefetch, { timeout: 4000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const timer = setTimeout(prefetch, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.95 });
     const raf = (time) => {
@@ -49,12 +70,14 @@ function App() {
       <BrowserRouter>
         <ScrollManager />
         <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/enquiry" element={<Enquiry />} />
-        </Routes>
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/enquiry" element={<Enquiry />} />
+          </Routes>
+        </Suspense>
         <Footer />
       </BrowserRouter>
       <Toaster
