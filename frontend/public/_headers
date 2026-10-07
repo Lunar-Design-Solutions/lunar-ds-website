@@ -1,5 +1,15 @@
 # Cloudflare Pages response headers.
 
+# Browser security protections for every page (audit item A4).
+# The Content-Security-Policy is report-only for now: it logs problems in the browser console
+# but blocks nothing. The sha256 hash allows the toast library's built-in <style> tag; if a
+# sonner upgrade changes that CSS, update the hash from the console message.
+/*
+  Strict-Transport-Security: max-age=31536000
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'sha256-7lAG9nNPimWNBky6j9qnn0jfFzu5wK96KOj/UzoG0hg='; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; media-src 'self'; object-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
 # Build files have a content hash in their names and never change, so browsers can keep them.
 /static/*
   Cache-Control: public, max-age=31536000, immutable
