@@ -1,8 +1,4 @@
-# The site's real pages are served by the single-page app. Any other address gets
-# 404.html with a true 404 status (Cloudflare Pages does this once 404.html exists).
-/work      /index.html  200
-/work/     /index.html  200
-/about     /index.html  200
-/about/    /index.html  200
-/enquiry   /index.html  200
-/enquiry/  /index.html  200
+# No rules. /work, /about and /enquiry are served as real pages: the build copies index.html
+# to work.html, about.html and enquiry.html (see the build script in package.json).
+# Rewriting to /index.html here does not work on Cloudflare Pages: it redirects to the home page.
+# Any other address gets 404.html with a 404 status.
