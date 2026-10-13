@@ -65,7 +65,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build && cd build && for p in work about enquiry; do cp index.html $p.html; done",
+    "build": "craco build && node scripts/page-copies.js",
     "test": "craco test"
   },
   "browserslist": {
