@@ -1,0 +1,18 @@
+# MTA-STS policy for lunar-ds.com (health-check audit B4, 13 Oct 2026).
+# Serves https://mta-sts.lunar-ds.com/.well-known/mta-sts.txt, which tells other mail servers to
+# deliver mail for lunar-ds.com only over an encrypted connection. Mode is "testing": problems are
+# reported to tls-reports@lunar-ds.com (the _smtp._tls TXT record) but no email is ever refused.
+# Deployed by Cloudflare Workers Builds from this folder (root: workers/mta-sts).
+# Whenever the policy in index.js changes, also give the _mta-sts TXT record in DNS a new id
+# (e.g. v=STSv1; id=20261027) so mail servers fetch the new version.
+
+name = "lunar-ds-mta-sts"
+main = "index.js"
+compatibility_date = "2026-09-25"
+
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "mta-sts.lunar-ds.com", custom_domain = true }
+]
