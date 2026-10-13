@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import "@/App.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import PAGE_TITLES from "@/data/pageTitles.json";
 import Home from "@/pages/Home";
 
 // Other pages load as separate files so the home page downloads less up front.
@@ -27,6 +28,10 @@ const ScrollManager = () => {
       window.scrollTo(0, 0);
     }
   }, [pathname, hash]);
+  // Each page has its own browser-tab title (also written into the page files at build time).
+  useEffect(() => {
+    document.title = PAGE_TITLES[pathname.replace(/\/$/, "") || "/"] || PAGE_TITLES["/"];
+  }, [pathname]);
   return null;
 };
 
