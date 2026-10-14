@@ -218,6 +218,17 @@ const CTABand = () => (
       >
         Start a Project <ArrowRight size={16} />
       </Link>
+      <p className="mt-8 text-sm text-[#A39E93]">
+        Already have a site?{" "}
+        <a
+          href="https://check.lunar-ds.com/"
+          data-testid="cta-band-free-check"
+          className="text-[#F4F1EA] underline decoration-[var(--gold)] underline-offset-4 transition-colors duration-300 hover:text-[var(--gold)]"
+        >
+          Run a free website health check
+        </a>{" "}
+        — security, speed, Google and email in about a minute.
+      </p>
     </Reveal>
   </section>
 );

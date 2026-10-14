@@ -51,6 +51,13 @@ export const Footer = () => {
               </Link>
             ))}
               <a
+                href="https://check.lunar-ds.com/"
+                data-testid="footer-link-free-check"
+                className="text-sm text-[#A39E93] transition-colors duration-300 hover:text-[var(--gold)]"
+              >
+                Free Website Check
+              </a>
+              <a
                 href="/privacy"
                 data-testid="footer-link-privacy"
                 className="text-sm text-[#A39E93] transition-colors duration-300 hover:text-[var(--gold)]"
@@ -82,8 +89,11 @@ export const Footer = () => {
         </div>
       </div>
 
-      <div className="relative border-t border-white/5 py-6 text-center font-mono text-[11px] uppercase tracking-[0.3em] text-[#68645D]">
+      <div className="relative border-t border-white/5 px-6 py-6 text-center font-mono text-[11px] uppercase tracking-[0.3em] text-[#68645D]">
         © {new Date().getFullYear()} Lunar Design — All orbits reserved
+        <p className="mt-3 normal-case tracking-[0.08em]" data-testid="footer-company-details">
+          Lunar Design Solutions Ltd · Registered in Scotland SC903290 · 80 Fereneze Crescent, Hamilton, ML3 9TN
+        </p>
       </div>
     </footer>
   );
