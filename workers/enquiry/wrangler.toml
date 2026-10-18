@@ -13,7 +13,7 @@ preview_urls = false
 
 [vars]
 NOTIFY_TO = "stephenrae.lunardesigns@gmail.com,lauren.lunardesign@gmail.com"
-FROM_ADDRESS = "enquiries@lunar-ds.com"
+FROM_ADDRESS = "enquiries@mail.lunar-ds.com"
 FROM_NAME = "Lunar Design Website"
 
 # Free plan: can only send to destination addresses verified in Email Routing.
