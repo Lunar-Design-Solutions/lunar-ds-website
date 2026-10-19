@@ -90,17 +90,17 @@ export default {
     if (error) return json({ detail: error }, 422);
 
     const to = String(env.NOTIFY_TO || "").split(",").map((s) => s.trim()).filter(Boolean);
-    try {
-      await env.EMAIL.send({
-        from: { email: env.FROM_ADDRESS, name: env.FROM_NAME },
-        to,
-        replyTo: { email: enquiry.email, name: enquiry.name },
-        subject: `New enquiry - ${enquiry.name}`,
-        html: renderHtml(enquiry, env.FROM_NAME),
-        text: renderText(enquiry),
-      });
-    } catch (err) {
-      console.error("Enquiry email failed", err?.code, err?.message);
+    // One message per inbox, so one address Cloudflare hasn't verified can't lose the enquiry.
+    const results = await Promise.allSettled(to.map((addr) => env.EMAIL.send({
+      from: { email: env.FROM_ADDRESS, name: env.FROM_NAME },
+      to: addr,
+      replyTo: { email: enquiry.email, name: enquiry.name },
+      subject: `New enquiry - ${enquiry.name}`,
+      html: renderHtml(enquiry, env.FROM_NAME),
+      text: renderText(enquiry),
+    })));
+    results.forEach((r, i) => { if (r.status === "rejected") console.error("Enquiry email failed", to[i], r.reason?.code, r.reason?.message); });
+    if (!results.some((r) => r.status === "fulfilled")) {
       return json({ detail: "We couldn't send your enquiry just now. Please try again." }, 500);
     }
 
